@@ -13,7 +13,7 @@
       <link>http://localhost:1313/posts/my-first-post/</link>
       <pubDate>Thu, 31 Jul 2025 23:08:14 +0100</pubDate>
       <guid>http://localhost:1313/posts/my-first-post/</guid>
-      <description>&lt;p&gt;HI&lt;/p&gt;</description>
+      <description>&lt;h1 id=&#34;this-is-a-test&#34;&gt;This is a test&lt;/h1&gt;&#xA;&lt;p&gt;&amp;lsquo;&amp;lsquo;&amp;rsquo;nix&#xA;let in&#xA;&amp;rsquo;&amp;rsquo;&amp;rsquo;&lt;/p&gt;&#xA;&lt;p&gt;HkI&lt;/p&gt;</description>
     </item>
     <item>
       <title></title>
