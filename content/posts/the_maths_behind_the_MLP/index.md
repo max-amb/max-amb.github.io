@@ -1,8 +1,8 @@
 +++
 title = 'The maths behind the MLP'
 series = ['Making a MLP in rust, from scratch, for MNIST']
-date = '2025-08-11T10:45:32+01:00'
-draft = true
+date = '2025-08-13'
+draft = false 
 +++
 {{< toc >}}
 

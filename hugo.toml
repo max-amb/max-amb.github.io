@@ -18,6 +18,7 @@ theme = "hello-friend-ng"
           inline = [['$', '$']]
 
 [params]
+  dateFormat = "02 Jan 2006"
   math = true
   contentTypeName = "posts"
   DefaultContentLanguage = "en"
@@ -49,3 +50,4 @@ theme = "hello-friend-ng"
   startLevel = 2
   endLevel = 6
   ordered = false
+
