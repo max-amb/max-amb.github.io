@@ -459,7 +459,7 @@ $$
 Putting it all together, we now have $\delta^{[l-1]}$ for any arbitrary layer!
 
 $$
-\delta^{[l-1]} = ({\omega^{[l]}}^T \delta^{[l]}) \otimes f'(z^{[l-1]})
+\delta^{[l-1]} = ({\omega^{[l]}}^T \delta^{[l]}) \odot f'(z^{[l-1]})
 $$
 
 This instantly gives us $b^{[l-1]}$ as:
@@ -480,7 +480,7 @@ $$
 \frac{\partial C}{\partial b^{[l-1]}} = \delta^{[l-1]},
 \frac{\partial C}{\partial \omega^{[l-1]}} = \delta^{[l-1]} a^{{[l-2]}^{T}}
 $$
-where $\delta^{[l-1]} = ({\omega^{[l]}}^T \delta^{[l]}) \otimes f'(z^{[l-1]})$
+where $\delta^{[l-1]} = ({\omega^{[l]}}^T \delta^{[l]}) \odot f'(z^{[l-1]})$
 
 ## Conclusion
 This concludes the mathematics behind the MLP.
