@@ -493,3 +493,4 @@ This, sort of similarly to weak induction, allows us to determine the derivative
 Repeating this cycle allows us to train an MLP to do a variety of tasks, including classification of numbers, what we will be doing next!
 
 Thank you for reading my first blog! Any comments are welcome below :).
+{{< comments >}}

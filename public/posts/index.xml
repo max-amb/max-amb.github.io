@@ -541,20 +541,23 @@ Followed by determining the derivatives of the weights and biases wrt. the loss 
 And then we determined the derivatives of the weights and biases wrt. the loss for any arbitrary layer but the layer connecting to the output layer.
 This, sort of similarly to weak induction, allows us to determine the derivatives of the weights and biases wrt. the loss for any layer in the network.</p>
 <p>Repeating this cycle allows us to train an MLP to do a variety of tasks, including classification of numbers, what we will be doing next!</p>
-<p>Thank you for reading my first blog! Any comments are welcome below :).</p>
-<script type="text/javascript" src="https://gitlab.com/cactus-comments/cactus-client/-/raw/main/src/cactus.js"></script>
-<link rel="stylesheet" href="https://gitlab.com/cactus-comments/cactus-client/-/raw/main/src/style.css" type="text/css">
-<div id="comment-section"></div>
-<script>
-initComments({
-  node: document.getElementById("comment-section"),
-  defaultHomeserverUrl: "https://matrix.cactus.chat:8448",
-  serverName: "cactus.chat",
-  siteName: "max-amb",
-  commentSectionId: "test"
-})
+<p>Thank you for reading my first blog! Any comments are welcome below :).
+<script src="https://giscus.app/client.js"
+        data-repo="max-amb/max-amb.github.io"
+        data-repo-id="R_kgDOPWPxxw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOPWPxx84CuILK"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="dark_protanopia"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
 </script>
-
+</p>
 ]]></content>
         </item>
         
