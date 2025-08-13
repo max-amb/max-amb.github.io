@@ -480,7 +480,7 @@ $$
 \frac{\partial C}{\partial b^{[l-1]}} = \delta^{[l-1]},
 \frac{\partial C}{\partial \omega^{[l-1]}} = \delta^{[l-1]} a^{{[l-2]}^{T}}
 $$
-where $\delta^{[L]} = ({\omega^{[l]}}^T \delta^{[l]}) \ f'(z^{[l-1]})$
+where $\delta^{[l]} = ({\omega^{[l]}}^T \delta^{[l]}) \ f'(z^{[l-1]})$
 
 ## Conclusion
 This concludes the mathematics behind the MLP.
