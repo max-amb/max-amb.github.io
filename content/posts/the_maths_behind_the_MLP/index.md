@@ -83,29 +83,29 @@ To provide some intuition for this we can consider the $z^{[l]}$ vector:
 
 Given $m+1$ nodes in the layer $[l-1]$ (input) and $n+1$ nodes in layer $[l]$ (output), we have a weights matrix:
 $$
-\omega^{[l]} = \begin{bmatrix} \omega_{00}^{[l]} & \omega_{01}^{[l]} & ... & \omega_{0m}^{[l]} \\\ \omega_{10}^{[l]} & \omega_{11}^{[l]} & ... & \omega_{1m}^{[l]} \\\ \vdots & \vdots & \ddots & \vdots \\\ \omega_{n0}^{[l]} & \omega_{n1}^{[l]} & ... & \omega_{nm}^{[l]} \end{bmatrix}
+\omega^{[l]} = \begin{bmatrix} \omega_{00}^{[l]} & \omega_{01}^{[l]} & ... & \omega_{0m}^{[l]} \\ \omega_{10}^{[l]} & \omega_{11}^{[l]} & ... & \omega_{1m}^{[l]} \\ \vdots & \vdots & \ddots & \vdots \\ \omega_{n0}^{[l]} & \omega_{n1}^{[l]} & ... & \omega_{nm}^{[l]} \end{bmatrix}
 $$
 a biases vector:
 $$
-b^{[l]} = \begin{bmatrix} b_0^{[l]} \\\ b_1^{[l]} \\\ \vdots \\\ b_n^{[l]} \end{bmatrix}
+b^{[l]} = \begin{bmatrix} b_0^{[l]} \\ b_1^{[l]} \\ \vdots \\ b_n^{[l]} \end{bmatrix}
 $$
 and a vector of the nodes in layer $l-1$:
 $$
-a^{[l-1]} = \begin{bmatrix} a_0^{[l-1]} \\\ a_1^{[l-1]} \\\ \vdots \\\ a_m^{[l-1]} \end{bmatrix}
+a^{[l-1]} = \begin{bmatrix} a_0^{[l-1]} \\ a_1^{[l-1]} \\ \vdots \\ a_m^{[l-1]} \end{bmatrix}
 $$
 And we want a vector, $z^{[l]}$, as follows:
 $$
-z^{[l]} = \begin{bmatrix} (\sum_i^m a_i^{[l-1]}\ \omega_{0i}^{[l]}) + b_0^{[l]} \\\ (\sum_i^m a_i^{[l-1]}\ \omega_{1i}^{[l]}) + b_1^{[l]} \\\ \vdots \\\ (\sum_i^m a_i^{[l-1]}\ \omega_{ni}^{[l]}) + b_n^{[l]} \end{bmatrix}
+z^{[l]} = \begin{bmatrix} (\sum_i^m a_i^{[l-1]}\ \omega_{0i}^{[l]}) + b_0^{[l]} \\ (\sum_i^m a_i^{[l-1]}\ \omega_{1i}^{[l]}) + b_1^{[l]} \\ \vdots \\ (\sum_i^m a_i^{[l-1]}\ \omega_{ni}^{[l]}) + b_n^{[l]} \end{bmatrix}
 $$
 Intuitively, matrix multiplication can be visualised as rotating a row from the matrix on the left, and superimposing that row on top of a column from the matrix on the right, and summing the values produced by multiplying the superimposed values and the values in the column.
 ![matrix multiplication](./images/matrix_multiplication_intuition.png)
 Once we have this vector:
 $$
-\begin{bmatrix} \sum_{i}^{m}a_i^{[l-1]}\omega_{0i}^{[l]} \\\ \sum_{i}^{m}a_i^{[l-1]}\omega_{1i}^{[l]} \\\ \vdots \\\ \sum_{i}^{m}a_i^{[l-1]}\omega_{ni}^{[l]} \end{bmatrix}
+\begin{bmatrix} \sum_{i}^{m}a_i^{[l-1]}\omega_{0i}^{[l]} \\ \sum_{i}^{m}a_i^{[l-1]}\omega_{1i}^{[l]} \\ \vdots \\ \sum_{i}^{m}a_i^{[l-1]}\omega_{ni}^{[l]} \end{bmatrix}
 $$
 we simply need to add the biases vector to get $z^{[l]}$, i.e.:
 $$
-z^{[l]} = \begin{bmatrix} \sum_{i}^{m}a_i^{[l-1]}\omega_{0i}^{[l]} \\\ \sum_{i}^{m}a_i^{[l-1]}\omega_{1i}^{[l]} \\\ \vdots \\\ \sum_{i}^{m}a_i^{[l-1]}\omega_{ni}^{[l]} \end{bmatrix} +\begin{bmatrix} b_0^{[l]} \\\ b_1^{[l]} \\\ \vdots \\\ b_n^{[l]} \end{bmatrix} = \omega^{[l]}a^{[l-1]} + b^{[l]} 
+z^{[l]} = \begin{bmatrix} \sum_{i}^{m}a_i^{[l-1]}\omega_{0i}^{[l]} \\ \sum_{i}^{m}a_i^{[l-1]}\omega_{1i}^{[l]} \\ \vdots \\ \sum_{i}^{m}a_i^{[l-1]}\omega_{ni}^{[l]} \end{bmatrix} +\begin{bmatrix} b_0^{[l]} \\ b_1^{[l]} \\ \vdots \\ b_n^{[l]} \end{bmatrix} = \omega^{[l]}a^{[l-1]} + b^{[l]} 
 $$
 
 #### Vector of neuron values 
@@ -234,7 +234,7 @@ We define a new vector $\nabla_{a^{[L]}}C$, to be the derivative of the loss fun
 Note you may see this written as just $\nabla_{a}C$ to be more concise.
 Therefore:
 $$
-\nabla_{a}C = \begin{bmatrix} 2 \ (a_0^{[L]} - \hat{a_0^{[L]}}) \\\ 2 \ (a_1^{[L]} - \hat{a_1^{[L]}}) \\\ \vdots \\\ 2 \ (a_n^{[L]} - \hat{a_n^{[L]}}) \end{bmatrix}
+\nabla_{a}C = \begin{bmatrix} 2 \ (a_0^{[L]} - \hat{a_0^{[L]}}) \\ 2 \ (a_1^{[L]} - \hat{a_1^{[L]}}) \\ \vdots \\ 2 \ (a_n^{[L]} - \hat{a_n^{[L]}}) \end{bmatrix}
 $$
 for $n+1$ nodes in the output layer.
 
@@ -249,7 +249,7 @@ Where $z^{[L]}$ is the vector of the z values and we apply $f'$ to every value i
 
 So now we have a vector of delta values: 
 $$
-\delta^{[L]} = \begin{bmatrix} \delta_0^{[L]} \\\ \delta_1^{[L]} \\\ \vdots \\\ \delta_n^{[L]} \end{bmatrix}
+\delta^{[L]} = \begin{bmatrix} \delta_0^{[L]} \\ \delta_1^{[L]} \\ \vdots \\ \delta_n^{[L]} \end{bmatrix}
 $$
 for $n+1$ nodes in the output layer.
 
@@ -261,7 +261,7 @@ $$
 
 Now, to find the matrix of the derivative of the loss wrt. the weights it is useful to look again at the structure of the weights matrix: 
 $$
-\omega^{[L]} = \begin{bmatrix} \omega_{00}^{[L]} & \omega_{01}^{[L]} & \omega_{02}^{[L]} & ... & \omega_{0m}^{[L]} \\\ \omega_{10}^{[L]} & \omega_{11}^{[L]} & \omega_{12}^{[L]} & ... & \omega_{1m}^{[L]} \\\ \vdots & \vdots & \vdots & \ddots & \vdots \\\ \omega_{n0}^{[L]} & \omega_{n1}^{[L]} & \omega_{n2}^{[L]} & ... & \omega_{nm}^{[L]} \end{bmatrix}
+\omega^{[L]} = \begin{bmatrix} \omega_{00}^{[L]} & \omega_{01}^{[L]} & \omega_{02}^{[L]} & ... & \omega_{0m}^{[L]} \\ \omega_{10}^{[L]} & \omega_{11}^{[L]} & \omega_{12}^{[L]} & ... & \omega_{1m}^{[L]} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ \omega_{n0}^{[L]} & \omega_{n1}^{[L]} & \omega_{n2}^{[L]} & ... & \omega_{nm}^{[L]} \end{bmatrix}
 $$
 for $m+1$ nodes in the input layer and $n+1$ nodes in the output layer.
 
@@ -276,7 +276,7 @@ Therefore, at $\omega_{01}^{[L]}$'s position in the weight matrix, the value in 
 
 Leaning on intuition, we can construct the desired form of our matrix of derivatives of the loss wrt. the weights:
 $$
-\frac{\partial C}{\partial \omega^{[L]}} = \begin{bmatrix} \delta_{0}^{[L]} a_{0}^{[L-1]} & \delta_{0}^{[L]} a_{1}^{[L-1]} & \delta_{0}^{[L]} a_{2}^{[L-1]} & ... & \delta_{0}^{[L]} a_{m}^{[L-1]} \\\ \delta_{1}^{[L]} a_{0}^{[L-1]} & \delta_{1}^{[L]} a_{1}^{[L-1]} & \delta_{1}^{[L]} a_{2}^{[L]} & ... & \delta_{1}^{[L]} a_{m}^{[L]} \\\ \vdots & \vdots & \vdots & \ddots & \vdots \\\ \delta_{n}^{[L]} a_{0}^{[L-1]} & \delta_{n}^{[L]} a_{1}^{[L-1]} & \delta_{n}^{[L]} a_{2}^{[L-1]} & ... & \delta_{n}^{[L]} a_{m}^{[L-1]} \end{bmatrix}
+\frac{\partial C}{\partial \omega^{[L]}} = \begin{bmatrix} \delta_{0}^{[L]} a_{0}^{[L-1]} & \delta_{0}^{[L]} a_{1}^{[L-1]} & \delta_{0}^{[L]} a_{2}^{[L-1]} & ... & \delta_{0}^{[L]} a_{m}^{[L-1]} \\ \delta_{1}^{[L]} a_{0}^{[L-1]} & \delta_{1}^{[L]} a_{1}^{[L-1]} & \delta_{1}^{[L]} a_{2}^{[L]} & ... & \delta_{1}^{[L]} a_{m}^{[L]} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ \delta_{n}^{[L]} a_{0}^{[L-1]} & \delta_{n}^{[L]} a_{1}^{[L-1]} & \delta_{n}^{[L]} a_{2}^{[L-1]} & ... & \delta_{n}^{[L]} a_{m}^{[L-1]} \end{bmatrix}
 $$
 All nodes in the first row of the matrix effect the same output node, so they must be multiplied by the same delta value (that output node in this case has index zero).
 
@@ -432,7 +432,7 @@ Now we need to find a way to get $\sum_i \delta_i^{[l]} \omega_{ij}^{[l]}$ for e
 It is obviously going to be formed by some combination of the weights matrix ($\omega^{[l]}$) and the delta vector ($\delta^{[l]}$) as these are the only two terms in the sum.
 If we consider the weights matrix:
 $$
-\omega^{[l]} = \begin{bmatrix} \omega_{00}^{[l]} & \omega_{01}^{[l]} & ... & \omega_{0m}^{[l]} \\\ \omega_{10}^{[l]} & \omega_{11}^{[l]} & ... & \omega_{1m}^{[l]} \\\ \vdots & \vdots & \ddots & \vdots \\\ \omega_{n0}^{[l]} & \omega_{n1}^{[l]} & ... & \omega_{nm}^{[l]} \end{bmatrix}
+\omega^{[l]} = \begin{bmatrix} \omega_{00}^{[l]} & \omega_{01}^{[l]} & ... & \omega_{0m}^{[l]} \\ \omega_{10}^{[l]} & \omega_{11}^{[l]} & ... & \omega_{1m}^{[l]} \\ \vdots & \vdots & \ddots & \vdots \\ \omega_{n0}^{[l]} & \omega_{n1}^{[l]} & ... & \omega_{nm}^{[l]} \end{bmatrix}
 $$
 for $m+1$ nodes in the input layer and $n+1$ in the following layer.
 And the delta matrix:
