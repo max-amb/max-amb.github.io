@@ -1,0 +1,51 @@
+baseURL = "max-amb.github.io"
+languageCode = "en-us"
+title = "Max's blurtie blog"
+theme = "hello-friend-ng"
+
+[taxonomies]
+  category = "blog"
+  tag = "tags"
+  series = "series"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['$$', '$$']]
+          inline = [['$', '$']]
+
+[params]
+  math = true
+  contentTypeName = "posts"
+  DefaultContentLanguage = "en"
+  homeSubtitle = "Officially a student, but I do lots of things :)"
+  
+  [params.author]
+    name = "Max Ambaum"
+
+  [params.logo]
+    logoText = "nix-shell -p hugo"
+
+  [[params.social]]
+    name = "github"
+    url = "https://github.com/max-amb"
+
+[[menu.main]]
+  identifier = "posts"
+  name = "Posts"
+  url = "/posts/"
+  weight = 200
+
+[[menu.main]]
+  identifier = "series"
+  name = "Series"
+  url = "/series/"
+  weight = 300
+
+[markup.tableOfContents]
+  startLevel = 2
+  endLevel = 6
+  ordered = false

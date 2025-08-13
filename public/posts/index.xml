@@ -1,26 +1,562 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Posts on My New Hugo Site</title>
-    <link>http://localhost:1313/posts/</link>
-    <description>Recent content in Posts on My New Hugo Site</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 31 Jul 2025 23:08:14 +0100</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>My First Post</title>
-      <link>http://localhost:1313/posts/my-first-post/</link>
-      <pubDate>Thu, 31 Jul 2025 23:08:14 +0100</pubDate>
-      <guid>http://localhost:1313/posts/my-first-post/</guid>
-      <description>&lt;h1 id=&#34;this-is-a-test&#34;&gt;This is a test&lt;/h1&gt;&#xA;&lt;p&gt;&amp;lsquo;&amp;lsquo;&amp;rsquo;nix&#xA;let in&#xA;&amp;rsquo;&amp;rsquo;&amp;rsquo;&lt;/p&gt;&#xA;&lt;p&gt;HkI&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title></title>
-      <link>http://localhost:1313/posts/md/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/md/</guid>
-      <description>&lt;p&gt;HE&lt;/p&gt;</description>
-    </item>
-  </channel>
+    <channel>
+        <title>Posts on Max&#39;s blurtie blog</title>
+        <link>//localhost:1313/posts/</link>
+        <description>Recent content in Posts on Max&#39;s blurtie blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Mon, 11 Aug 2025 10:45:32 +0100</lastBuildDate>
+        <atom:link href="//localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>The maths behind the MLP</title>
+            <link>//localhost:1313/posts/the_maths_behind_the_mlp/</link>
+            <pubDate>Mon, 11 Aug 2025 10:45:32 +0100</pubDate>
+            
+            <guid>//localhost:1313/posts/the_maths_behind_the_mlp/</guid>
+            <description>&lt;nav id=&#34;TableOfContents&#34;&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&#34;#why-from-scratch&#34;&gt;Why from scratch&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&#34;#intuition&#34;&gt;Intuition?&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&#34;#notation&#34;&gt;Notation&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&#34;#forward-pass&#34;&gt;Forward pass&lt;/a&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&#34;#matrix-notation&#34;&gt;Matrix notation&lt;/a&gt;
+          &lt;ul&gt;
+            &lt;li&gt;&lt;a href=&#34;#vector-of-z-values&#34;&gt;Vector of z values&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&#34;#vector-of-neuron-values&#34;&gt;Vector of neuron values&lt;/a&gt;
+              &lt;ul&gt;
+                &lt;li&gt;&lt;a href=&#34;#non-linearity&#34;&gt;Non-linearity&lt;/a&gt;&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/li&gt;
+            &lt;li&gt;&lt;a href=&#34;#conclusion&#34;&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&#34;#backpropagation&#34;&gt;Backpropagation&lt;/a&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&#34;#output-layer-derivatives&#34;&gt;Output layer derivatives&lt;/a&gt;
+          &lt;ul&gt;
+            &lt;li&gt;&lt;a href=&#34;#bias-derivative&#34;&gt;Bias derivative&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&#34;#weight-derivative&#34;&gt;Weight derivative&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&#34;#delta&#34;&gt;Delta&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&#34;#representation-of-output-layer-backpropagation-as-a-matrix-operation&#34;&gt;Representation of output layer backpropagation as a matrix operation&lt;/a&gt;
+              &lt;ul&gt;
+                &lt;li&gt;&lt;a href=&#34;#added-notation&#34;&gt;Added notation&lt;/a&gt;&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/li&gt;
+            &lt;li&gt;&lt;a href=&#34;#conclusion-of-the-output-layer-derivatives&#34;&gt;Conclusion of the output layer derivatives&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+        &lt;li&gt;&lt;a href=&#34;#hidden-layer-derivatives&#34;&gt;Hidden layer derivatives&lt;/a&gt;
+          &lt;ul&gt;
+            &lt;li&gt;&lt;a href=&#34;#intuition-behind-the-derivative-sum&#34;&gt;Intuition behind the derivative sum&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&#34;#derivative-of-the-bias&#34;&gt;Derivative of the bias&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&#34;#derivative-of-the-weight&#34;&gt;Derivative of the weight&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&#34;#deltas-again&#34;&gt;Delta&amp;rsquo;s again&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&#34;#representation-of-hidden-layer-backpropagation-as-a-matrix-operation&#34;&gt;Representation of hidden layer backpropagation as a matrix operation&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&#34;#conclusion-of-the-hidden-layer-derivatives&#34;&gt;Conclusion of the hidden layer derivatives&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&#34;#conclusion-1&#34;&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+
+&lt;p&gt;This blog(/tutorial maybe?) is the first part in a walk-through of the process I followed to build a multi-layer-perceptron (MLP) from scratch in rust. Followed by using it to classify the &lt;a href=&#34;https://en.wikipedia.org/wiki/MNIST_database&#34;&gt;MNIST dataset&lt;/a&gt;. The source code for the MLP can be found &lt;a href=&#34;https://github.com/max-amb/number_recognition&#34;&gt;here&lt;/a&gt;.
+This means no &lt;a href=&#34;https://github.com/LaurentMazare/tch-rs&#34;&gt;pytorch&lt;/a&gt; or &lt;a href=&#34;https://github.com/tensorflow/rust&#34;&gt;tensorflow&lt;/a&gt;, both of which have rust bindings, just the rust standard library and the beautiful linear algebra crate, &lt;a href=&#34;https://nalgebra.rs/&#34;&gt;nalgebra&lt;/a&gt;.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-from-scratch">Why from scratch</a></li>
+    <li><a href="#intuition">Intuition?</a></li>
+    <li><a href="#notation">Notation</a></li>
+    <li><a href="#forward-pass">Forward pass</a>
+      <ul>
+        <li><a href="#matrix-notation">Matrix notation</a>
+          <ul>
+            <li><a href="#vector-of-z-values">Vector of z values</a></li>
+            <li><a href="#vector-of-neuron-values">Vector of neuron values</a>
+              <ul>
+                <li><a href="#non-linearity">Non-linearity</a></li>
+              </ul>
+            </li>
+            <li><a href="#conclusion">Conclusion</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#backpropagation">Backpropagation</a>
+      <ul>
+        <li><a href="#output-layer-derivatives">Output layer derivatives</a>
+          <ul>
+            <li><a href="#bias-derivative">Bias derivative</a></li>
+            <li><a href="#weight-derivative">Weight derivative</a></li>
+            <li><a href="#delta">Delta</a></li>
+            <li><a href="#representation-of-output-layer-backpropagation-as-a-matrix-operation">Representation of output layer backpropagation as a matrix operation</a>
+              <ul>
+                <li><a href="#added-notation">Added notation</a></li>
+              </ul>
+            </li>
+            <li><a href="#conclusion-of-the-output-layer-derivatives">Conclusion of the output layer derivatives</a></li>
+          </ul>
+        </li>
+        <li><a href="#hidden-layer-derivatives">Hidden layer derivatives</a>
+          <ul>
+            <li><a href="#intuition-behind-the-derivative-sum">Intuition behind the derivative sum</a></li>
+            <li><a href="#derivative-of-the-bias">Derivative of the bias</a></li>
+            <li><a href="#derivative-of-the-weight">Derivative of the weight</a></li>
+            <li><a href="#deltas-again">Delta&rsquo;s again</a></li>
+            <li><a href="#representation-of-hidden-layer-backpropagation-as-a-matrix-operation">Representation of hidden layer backpropagation as a matrix operation</a></li>
+            <li><a href="#conclusion-of-the-hidden-layer-derivatives">Conclusion of the hidden layer derivatives</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#conclusion-1">Conclusion</a></li>
+  </ul>
+</nav>
+
+<p>This blog(/tutorial maybe?) is the first part in a walk-through of the process I followed to build a multi-layer-perceptron (MLP) from scratch in rust. Followed by using it to classify the <a href="https://en.wikipedia.org/wiki/MNIST_database">MNIST dataset</a>. The source code for the MLP can be found <a href="https://github.com/max-amb/number_recognition">here</a>.
+This means no <a href="https://github.com/LaurentMazare/tch-rs">pytorch</a> or <a href="https://github.com/tensorflow/rust">tensorflow</a>, both of which have rust bindings, just the rust standard library and the beautiful linear algebra crate, <a href="https://nalgebra.rs/">nalgebra</a>.</p>
+<h2 id="why-from-scratch">Why from scratch</h2>
+<p>I am not entirely sure. Initially, I watched the first four episodes in the excellent <a href="https://youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&amp;si=VXW032Kq09cHEgpa">3blue1brown series on neural networks</a>.
+This piqued my interest and as I had an abundance of free time (having just finished my leaving school exams) I decided to implement a MLP for MNIST like the videos prescribed.
+I considered using the previously discussed machine learning libraries, but they felt a bit like cheating and there was something (perhaps deceivingly) alluring about implementing the maths behind machine learning.
+So, I went onwards.</p>
+<h2 id="intuition">Intuition?</h2>
+<p>This post is really focused on the algorithmic mathematics, and will not go into much - if any - intuition about it.
+If you are interested in the intuition behind the mathematics I highly recommend the <a href="https://youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&amp;si=VXW032Kq09cHEgpa">3blue1brown series on neural networks</a> or this <a href="https://eng.libretexts.org/Bookshelves/Computer_Science/Applied_Programming/Neural_Networks_and_Deep_Learning_(Nielsen)">open source textbook on machine learning</a>.
+I recommend you follow along with a <strong>PEN AND PAPER</strong> like all maths.</p>
+<h2 id="notation">Notation</h2>
+<p>We define the j&rsquo;th node in the $l$&lsquo;th layer to have a value of $a_j^{[l]}$. Layer $L$ is the output layer, layer $L-1$ is the layer that feeds into layer $L$ and so on. $a_j^{[l]}$ is calculated by summing the input nodes multiplied by their weights followed by the bias being added to that sum, then applying an activation function to that sum. So, if we denote our activation function as $f$. We have:</p>
+$$
+a_j^{[l]} = f((\sum_i a_i^{[l-1]}\ \omega_{ji}^{[l]}) + b_j^{[l]})
+$$<p>Here you can see how we denote weights: $\omega_{ji}^{[l]}$ represents the weight connecting node $a_i^{[l-1]}$ to node $a_j^{[l]}$.
+You can think of it as the weights and biases of layer $l$ are used to calculate the value of the node in layer $l$.</p>
+<p>The seemingly flipped notation for the subscript of the weights is because when we are using matrix multiplication this is how the matrix must be layed out.
+The columns of the matrix must line up with the input neurons and the rows the output neurons for the multiplication to be valid.
+Otherwise, the dimensions would be wrong.</p>
+<p>To simplify this, we define $z_j^{[l]}$ to be the z value of the $j$&lsquo;th node in layer $l$. The z value of a node is the value of a node <strong>before</strong> the activation function is applied to the node.
+So
+</p>
+$$
+z_j^{[l]} = (\sum_i a_i^{[l-1]}\ \omega_{ji}^{[l]}) + b_j^{[l]}
+$$<p>This simplifies our previous expression of $a_j^{[l]}$ to:
+</p>
+$$
+a_j^{[l]} = f(z_j^{[l]})
+$$<p>Also, we must specify that we are using quadratic loss/cost (I will use the word loss for this blog) for this example, and loss will be denoted $C$, i.e:
+</p>
+$$
+C = \sum_i (a_i - \hat{a_i})^2
+$$<p>
+We use $\hat{a_i}$ to denote the expected value of node $a_i$ and $a_i$ to denote the observed value.
+For example, we may have an observed output of:
+</p>
+$$
+\begin{bmatrix} 0.858 \\ 0.450 \\ 0.646 \end{bmatrix}
+$$<p>
+but an expected/label output of:
+</p>
+$$
+\begin{bmatrix} 0 \\ 1 \\ 0\end{bmatrix}
+$$<p>
+This means that $a_0 = 0.858$ and $\hat{a_0} ( = \hat{a_2} ) = 0$.</p>
+<p>If you are skim reading this, please also check <a href="#added-notation">some added notation</a>.</p>
+<p>Also, some (bad?) notation I use is instead of writing the full $i=0$ in the sum subscript, I only write $i$ as it looks cleaner. It is assumed that $i$ iterates over all of the elements possible in the vector or matrix.</p>
+<h2 id="forward-pass">Forward pass</h2>
+<p>The forward pass takes the input to the neural network (some vector) and effectively <em>applies</em> the neural network to the input, transforming it to an output vector.
+We do this by using the input to work out the values of the nodes in the second layer (or the first hidden layer), followed by the next hidden layer and so on until we we get to the output layer.</p>
+<h3 id="matrix-notation">Matrix notation</h3>
+<p>This process can be concisely represented with matrices and vectors.</p>
+<h4 id="vector-of-z-values">Vector of z values</h4>
+$$
+z^{[l]} = \omega^{[l]} a^{[l-1]} + b^{[l]}
+$$<p>
+where $a^{[l-1]}$ is the vector of layer $l-1$ of the MLP, and $z^{[l]}$ is the vector of z values for layer $l$ ($l$ is arbitrary).</p>
+<p>To provide some intuition for this we can consider the $z^{[l]}$ vector:</p>
+<p>Given $m+1$ nodes in the layer $[l-1]$ (input) and $n+1$ nodes in layer $[l]$ (output), we have a weights matrix:
+</p>
+$$
+\omega^{[l]} = \begin{bmatrix} \omega_{00}^{[l]} & \omega_{01}^{[l]} & ... & \omega_{0m}^{[l]} \\\ \omega_{10}^{[l]} & \omega_{11}^{[l]} & ... & \omega_{1m}^{[l]} \\\ \vdots & \vdots & \ddots & \vdots \\\ \omega_{n0}^{[l]} & \omega_{n1}^{[l]} & ... & \omega_{nm}^{[l]} \end{bmatrix}
+$$<p>
+a biases vector:
+</p>
+$$
+b^{[l]} = \begin{bmatrix} b_0^{[l]} \\\ b_1^{[l]} \\\ \vdots \\\ b_n^{[l]} \end{bmatrix}
+$$<p>
+and a vector of the nodes in layer $l-1$:
+</p>
+$$
+a^{[l-1]} = \begin{bmatrix} a_0^{[l-1]} \\\ a_1^{[l-1]} \\\ \vdots \\\ a_m^{[l-1]} \end{bmatrix}
+$$<p>
+And we want a vector, $z^{[l]}$, as follows:
+</p>
+$$
+z^{[l]} = \begin{bmatrix} (\sum_i^m a_i^{[l-1]}\ \omega_{0i}^{[l]}) + b_0^{[l]} \\\ (\sum_i^m a_i^{[l-1]}\ \omega_{1i}^{[l]}) + b_1^{[l]} \\\ \vdots \\\ (\sum_i^m a_i^{[l-1]}\ \omega_{ni}^{[l]}) + b_n^{[l]} \end{bmatrix}
+$$<p>
+Intuitively, matrix multiplication can be visualised as rotating a row from the matrix on the left, and superimposing that row on top of a column from the matrix on the right, and summing the values produced by multiplying the superimposed values and the values in the column.
+<img src="./images/matrix_multiplication_intuition.png" alt="matrix multiplication">
+Once we have this vector:
+</p>
+$$
+\begin{bmatrix} \sum_{i}^{m}a_i^{[l-1]}\omega_{0i}^{[l]} \\\ \sum_{i}^{m}a_i^{[l-1]}\omega_{1i}^{[l]} \\\ \vdots \\\ \sum_{i}^{m}a_i^{[l-1]}\omega_{ni}^{[l]} \end{bmatrix}
+$$<p>
+we simply need to add the biases vector to get $z^{[l]}$, i.e.:
+</p>
+$$
+z^{[l]} = \begin{bmatrix} \sum_{i}^{m}a_i^{[l-1]}\omega_{0i}^{[l]} \\\ \sum_{i}^{m}a_i^{[l-1]}\omega_{1i}^{[l]} \\\ \vdots \\\ \sum_{i}^{m}a_i^{[l-1]}\omega_{ni}^{[l]} \end{bmatrix} +\begin{bmatrix} b_0^{[l]} \\\ b_1^{[l]} \\\ \vdots \\\ b_n^{[l]} \end{bmatrix} = \omega^{[l]}a^{[l-1]} + b^{[l]} 
+$$<h4 id="vector-of-neuron-values">Vector of neuron values</h4>
+<p>Now we have our vector of z values we need to go to a vector of neuron values.
+This is simply done by applying an activation function, $f$, to each element in the vector and this is denoted as follows:
+</p>
+$$
+a^{[l]} = f(z^{[l]})
+$$<p>
+The activation function will typically differ depending on if we are travelling into a hidden layer or the final output layer.
+For example, you may use sigmoid for the output layer and Relu for the other layers.</p>
+<h5 id="non-linearity">Non-linearity</h5>
+<p>We need an activation function to introduce non-linearity to the network to allow the network to learn non-linear relationships between the input and the output.
+Otherwise the network could only fit a straight line.
+Imagine the following scenario: we are trying to fit a line that seperates two clusters:
+<img src="./images/non_linearity.png" alt="non linearity example">
+If we were restricted to linearity we would only be able to use the orange line. But, with non-linearity, we can use the pink line, which is obviously better.</p>
+<h4 id="conclusion">Conclusion</h4>
+<p>That is all the forward pass is! Matrix operation, followed by activation function, followed by matrix operation, followed by activation function, and so on, until the end of time.</p>
+<h2 id="backpropagation">Backpropagation</h2>
+<h3 id="output-layer-derivatives">Output layer derivatives</h3>
+<p>In order to begin backpropagation, we need to determine how much we need to change the output nodes values by.
+This can be done with partial derivatives, i.e. calculating: $\frac{\partial C}{\partial a_j^{[L]}}$. This will tell us how much the $a_j^{[L]}$&rsquo;s  observed value needs to change by.
+Here we use $a_j^{[L]}$ to denote the node we are calculating with respect to (wrt.) and we use $i$ as the <em>iterator</em> as such.</p>
+$$
+\begin{aligned}
+\frac{\partial C}{\partial a_j^{[L]}} & = \frac{\partial \sum_i (a_i^{[L]} - \hat{a_i^{[L]}})^2}{\partial a_j^{[L]}} \\
+& = \frac{\partial}{\partial a_j^{[L]}} (a_0^{[L]} - \hat{a_0^{[L]}})^2 + (a_1^{[L]} - \hat{a_1^{[L]}})^2 + ...\ +(a_i^{[L]} - \hat{a_i^{[L]}})^2 \\
+& = \frac{\partial}{\partial a_j^{[L]}} (a_j^{[L]} - \hat{a_j^{[L]}})^2 \\
+& = 2 \ (a_j^{[L]} - \hat{a_j^{[L]}})
+\end{aligned}
+$$<p>This is all well and good finding the amount $a_j^{[L]}$ needs to change by, but we (obviously) cannot directly change the value of $a_j^{[L]}$, we can only influence it via changing it&rsquo;s weights and biases.</p>
+<h4 id="bias-derivative">Bias derivative</h4>
+<p>So we need to find $\frac{\partial C}{\partial b_j^{[L]}}$. We can do it with some <em><strong>chain rule!!</strong></em>.
+</p>
+$$
+\frac{\partial C}{\partial b_j^{[L]}} = \frac{\partial C}{\partial a_j^{[L]}} \frac{\partial a_j^{[L]}}{\partial z_j^{[L]}} \frac{\partial z_j^{[L]}}{\partial b_j^{[L]}}
+$$<p>We already know:</p>
+$$
+\frac{\partial C}{\partial a_j^{[L]}} = 2 \ (a_j^{[L]} - \hat{a_j^{[L]}})
+$$<p>To determine $\frac{\partial a_j^{[L]}}{\partial z_j^{[L]}}$ we use our previous definition of $a_j^{[L]} = f(z_j^{[L]})$:</p>
+$$
+\begin{aligned}
+\frac{\partial a_j^{[L]}}{\partial z_j^{[L]}} & = \frac{\partial}{\partial z_j^{[L]}} f(z_j^{[L]}) \\
+& = f'(z_j^{[L]}) \ 1 = f'(z_j^{[L]})
+\end{aligned}
+$$<p>
+$\frac{\partial f}{\partial {z_j^{[L]}}}$ obviously depends on the activation function.</p>
+<p>Finally, to determine $\frac{\partial z_j^{[L]}}{\partial b_j^{[L]}}$ is trivial as $z_j^{[L]} = (\sum_i a_i^{[L-1]}\ \omega_{ji}^{[L]}) + b_j^{[L]}$.
+So:
+</p>
+$$
+\frac{\partial z_j^{[L]}}{\partial b_j^{[L]}} = \frac{\partial}{\partial b_j^{[L]}} b_j^{[L]} = 1
+$$<p>
+This falls out because when doing a partial derivative we discard all terms that do not contain the variable we are deriving with respect to, so in this case, we are left with just the $b_j^{[L]}$ term.</p>
+$$
+\therefore \frac{\partial C}{\partial b_j^{[L]}} = \frac{\partial C}{\partial a_j^{[L]}} \frac{\partial a_j^{[L]}}{\partial z_j^{[L]}} \frac{\partial z_j^{[L]}}{\partial b_j^{[L]}} = 2 \ (a_j^{[L]} - \hat{a_j^{[L]}})\ f'(z_j^{[L]})
+$$<h4 id="weight-derivative">Weight derivative</h4>
+<p>To find $\frac{\partial C}{\partial \omega_{ji}^{[L]}}$ we can use our work in <a href="#bias-derivative">finding the bias derivative</a>.</p>
+<blockquote>
+<p>If you are confused about this notation please look back to <a href="#notation">the notation section</a>.
+Remember here we are travelling from node $a_i^{[L-1]}$ to node $a_j^{[L]}$ via $\omega_{ji}^{[L]}$.</p></blockquote>
+<p>We need to find $\frac{\partial C}{\partial \omega_{ji}^{[L]}}$ which similarly to before, via the chain rule, we can determine to be:
+</p>
+$$
+\frac{\partial C}{\partial \omega_{ji}^{[L]}} = \frac{\partial C}{\partial a_j^{[L]}} \frac{\partial a_j^{[L]}}{\partial z_j^{[L]}} \frac{\partial z_j^{[L]}}{\partial \omega_{ji}^{[L]}}
+$$<p>We have already worked out $\frac{\partial C}{\partial z_j^{[L]}}$:
+</p>
+$$
+\frac{\partial C}{\partial z_j^{[L]}} = \frac{\partial C}{\partial a_j^{[L]}} \frac{\partial a_j^{[L]}}{\partial z_j^{[L]}} = 2 \ (a_j^{[L]} - \hat{a_j^{[L]}})\ f'(z_j^{[L]})
+$$<p>
+So we just need to find $\frac{\partial z_j^{[L]}}{\partial \omega_{ji}^{[L]}}$:
+</p>
+$$
+\begin{aligned}
+\frac{\partial z_j^{[L]}}{\partial \omega_{ji}^{[L]}} & = \frac{\partial}{\partial \omega_{ji}^{[L]}} z_j^{[L]} \\
+& = \frac{\partial}{\partial \omega_{ji}^{[L]}} a_i^{[L-1]} \omega_{ji}^{[L]} \\
+& = a_i^{[L-1]} 
+\end{aligned}
+$$$$
+\therefore \frac{\partial C}{\partial \omega_{ji}^{[L]}} = 2 \ (a_j^{[L]} - \hat{a_j^{[L]}})\ f'(z_j^{[L]}) \ a_i^{[L-1]}
+$$<h4 id="delta">Delta</h4>
+<p>If you read the previous two sections carefully enough, you may notice a consistency.
+We used $\frac{\partial C}{\partial a_j^{[L]}} \frac{\partial a_j^{[L]}}{\partial z_j^{[L]}}$ in both of these calculations.
+Mathematicians, in their constant search for more compact notation, have decided to denote this as $\delta_j^{[L]}$, i.e.</p>
+$$
+\frac{\partial C}{\partial a_j^{[L]}} \frac{\partial a_j^{[L]}}{\partial z_j^{[L]}} = \delta_j^{[L]} = 2 \ (a_j^{[L]} - \hat{a_j^{[L]}})\ f'(z_j^{[L]})
+$$<p>This means we can represent the <a href="#bias-derivative">bias derivative</a> as simply:
+</p>
+$$
+\frac{\partial C}{\partial b_j^{[L]}} = \delta_j^{[L]}
+$$<p>
+and the <a href="#weight-derivative">weight derivative</a> as:
+</p>
+$$
+\frac{\partial C}{\partial \omega_{ji}^{[L]}} = \delta_j^{[L]} a_i^{[L-1]}
+$$<h4 id="representation-of-output-layer-backpropagation-as-a-matrix-operation">Representation of output layer backpropagation as a matrix operation</h4>
+<p>We can represent backpropagation as a series of matrix operations which allows for more concise notation.
+To find the delta values we use the <a href="https://en.wikipedia.org/wiki/Hadamard_product_(matrices)">hadarmard product</a> denoted $\odot$.</p>
+<p>To do this section succinctly we must further define some more <em><strong>notation</strong></em> woop woop!</p>
+<h5 id="added-notation">Added notation</h5>
+<p>We define a new vector $\nabla_{a^{[L]}}C$, to be the derivative of the loss function wrt. each element in the output layer ($a^{[L]}$).
+Note you may see this written as just $\nabla_{a}C$ to be more concise.
+Therefore:
+</p>
+$$
+\nabla_{a}C = \begin{bmatrix} 2 \ (a_0^{[L]} - \hat{a_0^{[L]}}) \\\ 2 \ (a_1^{[L]} - \hat{a_1^{[L]}}) \\\ \vdots \\\ 2 \ (a_n^{[L]} - \hat{a_n^{[L]}}) \end{bmatrix}
+$$<p>
+for $n+1$ nodes in the output layer.</p>
+<p>This allows us to write $\delta^{[L]}$ (the vector of the delta values):
+</p>
+$$
+\delta^{[L]} = \nabla_a C \ \odot\  f'(z^{[L]})
+$$<p>
+Where $z^{[L]}$ is the vector of the z values and we apply $f'$ to every value in that vector.</p>
+<blockquote>
+<p>If this isn&rsquo;t immediately obvious to you, remember that $\delta_j^{[L]} = 2 \ (a_j^{[L]} - \hat{a_j^{[L]}})\ f'(z_j^{[L]})$.
+So you can think of $\delta^{[L]}$ being composed by just iterating $j$ over all of the output nodes.</p></blockquote>
+<p>So now we have a vector of delta values:
+</p>
+$$
+\delta^{[L]} = \begin{bmatrix} \delta_0^{[L]} \\\ \delta_1^{[L]} \\\ \vdots \\\ \delta_n^{[L]} \end{bmatrix}
+$$<p>
+for $n+1$ nodes in the output layer.</p>
+<p>This gives us the vector of the derivatives of the loss wrt. the biases, as:
+</p>
+$$
+\frac{\partial C}{\partial b_j^{[L]}} = \delta_j^{[L]} \implies \frac{\partial C}{\partial b^{[L]}} = \delta^{[L]}
+$$<p>Now, to find the matrix of the derivative of the loss wrt. the weights it is useful to look again at the structure of the weights matrix:
+</p>
+$$
+\omega^{[L]} = \begin{bmatrix} \omega_{00}^{[L]} & \omega_{01}^{[L]} & \omega_{02}^{[L]} & ... & \omega_{0m}^{[L]} \\\ \omega_{10}^{[L]} & \omega_{11}^{[L]} & \omega_{12}^{[L]} & ... & \omega_{1m}^{[L]} \\\ \vdots & \vdots & \vdots & \ddots & \vdots \\\ \omega_{n0}^{[L]} & \omega_{n1}^{[L]} & \omega_{n2}^{[L]} & ... & \omega_{nm}^{[L]} \end{bmatrix}
+$$<p>
+for $m+1$ nodes in the input layer and $n+1$ nodes in the output layer.</p>
+<p>We now begin to construct the matrix of derivatives by looking at an example.
+For example, $\omega_{01}^{[L]}$ connects node $a_1^{[L-1]}$ to node $a_0^{[L]}$, and has derivative:</p>
+$$
+\frac{\partial C}{\partial \omega_{01}^{[L]}} = \delta_0^{[L]} a_1^{[L-1]}
+$$<p>Therefore, at $\omega_{01}^{[L]}$&rsquo;s position in the weight matrix, the value in the corresponding position in the matrix of derivatives should be $\delta_0^{[L]} a_1^{[L-1]}$.</p>
+<p>Leaning on intuition, we can construct the desired form of our matrix of derivatives of the loss wrt. the weights:
+</p>
+$$
+\frac{\partial C}{\partial \omega^{[L]}} = \begin{bmatrix} \delta_{0}^{[L]} a_{0}^{[L-1]} & \delta_{0}^{[L]} a_{1}^{[L-1]} & \delta_{0}^{[L]} a_{2}^{[L-1]} & ... & \delta_{0}^{[L]} a_{m}^{[L-1]} \\\ \delta_{1}^{[L]} a_{0}^{[L-1]} & \delta_{1}^{[L]} a_{1}^{[L-1]} & \delta_{1}^{[L]} a_{2}^{[L]} & ... & \delta_{1}^{[L]} a_{m}^{[L]} \\\ \vdots & \vdots & \vdots & \ddots & \vdots \\\ \delta_{n}^{[L]} a_{0}^{[L-1]} & \delta_{n}^{[L]} a_{1}^{[L-1]} & \delta_{n}^{[L]} a_{2}^{[L-1]} & ... & \delta_{n}^{[L]} a_{m}^{[L-1]} \end{bmatrix}
+$$<p>
+All nodes in the first row of the matrix effect the same output node, so they must be multiplied by the same delta value (that output node in this case has index zero).</p>
+<p>We can see this is an operation between the delta vector $\delta^{[L]}$ and the layer vector $a^{[L-1]}$ (the layer vector is just the vector of the values in the layer).
+This operation, of merging the delta vector and the layer vector like so, is a common enough operation in linear algebra that it has it&rsquo;s own notation and name: it is the outer product, denoted $\otimes$. So:
+</p>
+$$
+\frac{\partial C}{\partial \omega^{[L]}} = \delta^{[L]} \otimes a^{[L-1]}
+$$<p>The outer product is equivalent to multiplying by the transpose matrix, i.e.:
+</p>
+$$
+\frac{\partial C}{\partial \omega^{[L]}} = \delta^{[L]} a^{{[L-1]}^{T}}
+$$<h4 id="conclusion-of-the-output-layer-derivatives">Conclusion of the output layer derivatives</h4>
+<p>To conclude, we have worked out how to get a vector of the derivatives of the loss wrt. the biases, and how to get a matrix of the derivatives of the loss wrt. the weights for the output layer:
+</p>
+$$
+\frac{\partial C}{\partial b^{[L]}} = \delta^{[L]}, 
+\frac{\partial C}{\partial \omega^{[L]}} = \delta^{[L]} a^{{[L-1]}^{T}}
+$$<p>
+where $\delta^{[L]} = \nabla_a L \ \odot\  f'(z^{[L]})$</p>
+<h3 id="hidden-layer-derivatives">Hidden layer derivatives</h3>
+<p>We begin this section similarly to how we began <a href="#output-layer-derivatives">for the output layer</a>. We need the derivative of the loss wrt. to a node.
+However, now we need the derivative of the cost wrt. an arbitrary node in the layer $[l-1]$. Lets call it $a_j^{[l-1]}$:
+</p>
+$$
+\frac{\partial C}{\partial a_j^{[l-1]}} = \sum_i \frac{\partial C}{\partial a_i^{[l]}} \frac{\partial a_i^{[l]}}{\partial z_i^{[l]}} \frac{\partial z_i^{[l]}}{\partial a_j^{[l-1]}}
+$$<p>
+What? Why is there a sum? There is a rigorous way to argue this which I do not understand yet (though I might in a future post?), but conceptually/intuitively it seems quite obvious.</p>
+<h4 id="intuition-behind-the-derivative-sum">Intuition behind the derivative sum</h4>
+<p>Consider the node $a_j^{[l-1]}$, in our fully connected MLP, the value of the node effects the values of <strong>ALL</strong> of the nodes in the following layer.
+I.e. changing the value of $a_j^{[l-1]}$ effects every value in $a^{[l]}$.
+This consequence is easier to think of if we imagine we are in the layer directly preceding the layer before the output layer (whose derivatives we have already worked out).</p>
+<p>This means that the total amount $a_j^{[l-1]}$ effects the loss function (the derivative of the loss function wrt. $a_j^{[l-1]}$) depends on all of the nodes in the following layer.
+So, to find the total impact of $a_j^{[l-1]}$  on the loss function, we need to sum its individual impacts on the individual nodes in the following layer.</p>
+<p>If this call to your intuition hasn&rsquo;t landed I thoroughly recommend you research this further, it&rsquo;s a subtopic in <a href="https://en.wikipedia.org/wiki/Automatic_differentiation">automatic differentiation</a> and there are many good videos like <a href="https://www.youtube.com/watch?v=FtnkqIsfNQc">this one</a> that explore it further.</p>
+<p>Now, taking our sum derivative to be true, we can proceed by subsituting in delta which we have already worked out:
+</p>
+$$
+\begin{aligned}
+\frac{\partial C}{\partial a_j^{[l-1]}} & = \sum_i \frac{\partial C}{\partial a_i^{[l]}} \frac{\partial a_i^{[l]}}{\partial z_i^{[l]}} \frac{\partial z_i^{[l]}}{\partial a_j^{[l-1]}} \\
+& = \sum_i \delta_i^{[l]} \frac{\partial z_i^{[l]}}{\partial a_j^{[l-1]}}
+\end{aligned}
+$$<p>We need to determine $\frac{\partial z_i^{[l]}}{\partial a_j^{[l-1]}}$:
+</p>
+$$
+\begin{aligned}
+\frac{\partial z_i^{[l]}}{\partial a_j^{[l-1]}} = \frac{\partial}{\partial a_j^{[l-1]}} (\sum_k a_k^{[l-1]}\ \omega_{ik}^{[l]}) + b_i^{[l]}
+\end{aligned}
+$$<p>
+There will be one case in the sum where $j=k$ (in the rest of the cases $j!=k$ so the terms will disappear):
+</p>
+$$
+\begin{aligned}
+\frac{\partial}{\partial a_j^{[l-1]}} (\sum_k a_k^{[l-1]}\ \omega_{ik}^{[l]}) + b_i^{[l]} & = \frac{\partial}{\partial a_j^{[l-1]}} a_k^{[l-1]}\ \omega_{ik}^{[l]} \\
+& = \omega_{ik}^{[l]}
+= \omega_{ij}^{[l]} \\
+\implies \frac{\partial z_i^{[l]}}{\partial a_j^{[l-1]}} = \omega_{ij}^{[l]}
+\end{aligned}
+$$<p>So, substituting back in:
+</p>
+$$
+\begin{aligned}
+\frac{\partial C}{\partial a_j^{[l-1]}} & = \sum_i \delta_i^{[l]} \frac{\partial z_i^{[l]}}{\partial a_j^{[l-1]}} \\
+& = \sum_i \delta_i^{[l]} \omega_{ij}^{[l]}
+\end{aligned}
+$$<p>This sum may look a bit mysterious at first but it is simply iterating over all of the nodes that are in the following layer, and multiplying the weight of the connection against the delta value of the node in the following layer.</p>
+<p><img src="./images/delta_sum_for_hidden_layer.png" alt="delta sum for hidden layer"></p>
+<h4 id="derivative-of-the-bias">Derivative of the bias</h4>
+<p>Now we have $\frac{\partial C}{\partial a_j^{[l-1]}}$ we can work out $\frac{\partial C}{\partial b_j^{[l-1]}}$ pretty easily and similarly to before.
+The chain rule tells us:
+</p>
+$$
+\frac{\partial C}{\partial b_j^{[l-1]}} = \frac{\partial C}{\partial a_j^{[l-1]}} \frac{\partial a_j^{[l-1]}}{\partial z_j^{[l-1]}} \frac{\partial z_j^{[l-1]}}{\partial b_j^{[l-1]}}
+$$<p>
+This may (hopefully) look familiar&hellip; it is almost exactly the same as what we had before! The one difference is the layer, instead of layer $L-1$, we are now working with the arbitrary layer $l-1$.
+It makes sense that they look similar as we are of course working out similar quantities.
+This means we can look back at our previous work and say that:
+</p>
+$$
+\frac{\partial a_j^{[l-1]}}{\partial z_j^{[l-1]}} = f'(z_j^{[l-1]})
+$$<p>
+The only change being $z_j^{[l]} \to z_j^{[l-1]}$.</p>
+<p>Then, working out the $\frac{\partial z_j^{[l-1]}}{\partial b_j^{[l-1]}}$ is as trivial as before and again, it is $1$.</p>
+<p>So:
+</p>
+$$
+\begin{aligned}
+\frac{\partial C}{\partial b_j^{[l-1]}} & = \frac{\partial C}{\partial a_j^{[l-1]}} \frac{\partial a_j^{[l-1]}}{\partial z_j^{[l-1]}} \frac{\partial z_j^{[l-1]}}{\partial b_j^{[l-1]}} \\
+& = (\sum_i \delta_i^{[l]} \omega_{ij}^{[l]}) \ f'(z_j^{[l-1]})
+\end{aligned}
+$$<h4 id="derivative-of-the-weight">Derivative of the weight</h4>
+<p>Similarly to in working out the new <a href="#derivative-of-the-bias">derivative of the bias</a>, we can lean on previous work here.
+Via the chain rule, we need:
+</p>
+$$
+\frac{\partial C}{\partial \omega_{ji}^{[l-1]}} = \frac{\partial C}{\partial a_j^{[l-1]}} \frac{\partial a_j^{[l-1]}}{\partial z_j^{[l-1]}} \frac{\partial z_j^{[l-1]}}{\partial \omega_{ji}^{[l-1]}}
+$$<p>Looking back at our previous work (<a href="#derivative-of-the-bias">here</a>), we can see that:
+</p>
+$$
+\frac{\partial a_j^{[l-1]}}{\partial z_j^{[l-1]}} \frac{\partial z_j^{[l-1]}}{\partial \omega_{ji}^{[l-1]}} = \ f'(z_j^{[l-1]}) \frac{\partial z_j^{[l-1]}}{\partial \omega_{ji}^{[l-1]}}
+$$<p>
+Then, looking back at <a href="#weight-derivative">finding the derivative of the weights on the output layer</a>, we can see:
+</p>
+$$
+\frac{\partial z_j^{[l-1]}}{\partial \omega_{ji}^{[l-1]}} = a_i^{[l-2]}
+$$<p>
+The only change being $a_i^{[l-1]} \to a_i^{[l-2]}$.</p>
+<p>So:
+</p>
+$$
+\begin{aligned}
+\frac{\partial C}{\partial \omega_{ji}^{[l-1]}} & = \frac{\partial C}{\partial a_j^{[l-1]}} \frac{\partial a_j^{[l-1]}}{\partial z_j^{[l-1]}} \frac{\partial z_j^{[l-1]}}{\partial \omega_{ji}^{[l-1]}} \\
+& = (\sum_i \delta_i^{[l]} \omega_{ij}^{[l]}) \ f'(z_j^{[l-1]}) \ a_i^{[l-2]}
+\end{aligned}
+$$<h4 id="deltas-again">Delta&rsquo;s again</h4>
+<p>We (similarly to <a href="#delta">before</a>), spot a similarity in our derivatives for the weights and biases.
+Both contain a $(\sum_i \delta_i^{[l]} \omega_{ij}^{[l]}) \ f'(z_j^{[l-1]})$ term.
+And, like before, this term is equal to the derivative of the loss function wrt. the bias (due to the expressions being extremely similar), and multiplying it by the value of the neuron in the preceding layer gives the derivative of the loss function wrt. the weight.
+So, we write:
+</p>
+$$
+\delta_j^{[l-1]} = \frac{\partial C}{\partial a_j^{[l-1]}} \frac{\partial a_j^{[l-1]}}{\partial z_j^{[l-1]}} = (\sum_i \delta_i^{[l]} \omega_{ij}^{[l]}) \ f'(z_j^{[l-1]})
+$$<p>
+Giving:
+</p>
+$$
+\frac{\partial C}{\partial b_j^{[l-1]}} = \delta_j^{[l-1]}
+$$<p>
+and
+</p>
+$$
+\frac{\partial C}{\partial \omega_{ji}^{[l-1]}} = \delta_j^{[l-1]} a_i^{[l-2]}
+$$<h4 id="representation-of-hidden-layer-backpropagation-as-a-matrix-operation">Representation of hidden layer backpropagation as a matrix operation</h4>
+<p>As we did for the <a href="#representation-of-output-layer-backpropagation-as-a-matrix-operation">output layer</a>, we can represent hidden layer backpropagation using linear algebra.</p>
+<p>First, we need a way to obtain a vector of delta values for the layer.
+The $f'(z_j^{[l-1]})$ term is trivial: as before, we just apply $f'$ to every element in the $z^{[l-1]}$ vector:
+</p>
+$$
+f'(z^{[l-1]})
+$$<p>Now we need to find a way to get $\sum_i \delta_i^{[l]} \omega_{ij}^{[l]}$ for each neuron in the layer.
+It is obviously going to be formed by some combination of the weights matrix ($\omega^{[l]}$) and the delta vector ($\delta^{[l]}$) as these are the only two terms in the sum.
+If we consider the weights matrix:
+</p>
+$$
+\omega^{[l]} = \begin{bmatrix} \omega_{00}^{[l]} & \omega_{01}^{[l]} & ... & \omega_{0m}^{[l]} \\\ \omega_{10}^{[l]} & \omega_{11}^{[l]} & ... & \omega_{1m}^{[l]} \\\ \vdots & \vdots & \ddots & \vdots \\\ \omega_{n0}^{[l]} & \omega_{n1}^{[l]} & ... & \omega_{nm}^{[l]} \end{bmatrix}
+$$<p>
+for $m+1$ nodes in the input layer and $n+1$ in the following layer.
+And the delta matrix:
+</p>
+$$
+\delta^{[l]} = \begin{bmatrix} \delta_0^{[l]} \\ \delta_1^{[l]} \\ \vdots \\ \delta_n^{[l]} \end{bmatrix}
+$$<p>
+with, as expected, $n+1$ entries.</p>
+<p>We can see that the dimensions do not match up if we just wanted to multiply them, as $m$ does not necessarily equal $n$.
+However, if we transpose the weights matrix, giving us:
+</p>
+$$
+{\omega^{[l]}}^T = \begin{bmatrix} \omega_{00}^{[l]} & \omega_{10}^{[l]} & ... & \omega_{n0}^{[l]} \\ \omega_{01}^{[l]} & \omega_{11}^{[l]} & ... & \omega_{n1}^{[l]} \\ \vdots & \vdots & \ddots & \vdots \\ \omega_{0m}^{[l]} & \omega_{1m}^{[l]} & ... & \omega_{nm}^{[l]} \end{bmatrix}
+$$<p>
+we can multiply this by the delta vector and the dimensions will be correct.</p>
+<p>${\omega^{[l]}}^T \delta^{[l]}$ not only has the correct dimensions, it also gives us a vector the results we would like:</p>
+$$
+{\omega^{[l]}}^T \delta^{[l]} = \begin{bmatrix} \sum_i \delta_i^{[l]} \omega_{i0}^{[l]} \\ \sum_i \delta_i^{[l]} \omega_{i1}^{[l]} \\ \vdots \\ \sum_i \delta_i^{[l]} \omega_{im}^{[l]} \end{bmatrix}
+$$<blockquote>
+<p>If this isn&rsquo;t obvious to you, see <a href="#vector-of-z-values">earlier</a> which is similar and/or try it in a calculator to verify to yourself that this is in fact the case</p></blockquote>
+<p>Putting it all together, we now have $\delta^{[l-1]}$ for any arbitrary layer!</p>
+$$
+\delta^{[l-1]} = ({\omega^{[l]}}^T \delta^{[l]}) \ f'(z^{[l-1]})
+$$<p>This instantly gives us $b^{[l-1]}$ as:
+</p>
+$$
+b^{[l-1]} = \delta^{[l-1]}
+$$<p>We can quickly obtain $\omega^{[l-1]}$ with the same method as before <a href="#representation-of-output-layer-backpropagation-as-a-matrix-operation">when we did this for the output layer</a>.
+</p>
+$$
+\omega^{[l-1]} = \delta^{[l-1]} {a^{[l-2]}}^T
+$$<h4 id="conclusion-of-the-hidden-layer-derivatives">Conclusion of the hidden layer derivatives</h4>
+<p>We conclude very similarly to how we did in the <a href="#conclusion-of-the-output-layer-derivatives">conclusion of the output layer derivatives</a>.
+However, this time we have done it for any arbitrary layer (but the layer preceding the output layer) which we have denoted layer $l-1$.
+It only depends on the delta values of the layer ($l$) above it:
+</p>
+$$
+\frac{\partial C}{\partial b^{[l-1]}} = \delta^{[l-1]},
+\frac{\partial C}{\partial \omega^{[l-1]}} = \delta^{[l-1]} a^{{[l-2]}^{T}}
+$$<p>
+where $\delta^{[L]} = ({\omega^{[l]}}^T \delta^{[l]}) \ f'(z^{[l-1]})$</p>
+<h2 id="conclusion-1">Conclusion</h2>
+<p>This concludes the mathematics behind the MLP.</p>
+<p>We began by working out how to transform an input into its output through the neural network.
+Followed by determining the derivatives of the weights and biases wrt. the loss for the nodes connecting to the output layer.
+And then we determined the derivatives of the weights and biases wrt. the loss for any arbitrary layer but the layer connecting to the output layer.
+This, sort of similarly to weak induction, allows us to determine the derivatives of the weights and biases wrt. the loss for any layer in the network.</p>
+<p>Repeating this cycle allows us to train an MLP to do a variety of tasks, including classification of numbers, what we will be doing next!</p>
+<p>Thank you for reading my first blog! Any comments are welcome below :).</p>
+<script type="text/javascript" src="https://gitlab.com/cactus-comments/cactus-client/-/raw/main/src/cactus.js"></script>
+<link rel="stylesheet" href="https://gitlab.com/cactus-comments/cactus-client/-/raw/main/src/style.css" type="text/css">
+<div id="comment-section"></div>
+<script>
+initComments({
+  node: document.getElementById("comment-section"),
+  defaultHomeserverUrl: "https://matrix.cactus.chat:8448",
+  serverName: "cactus.chat",
+  siteName: "max-amb",
+  commentSectionId: "test"
+})
+</script>
+
+]]></content>
+        </item>
+        
+    </channel>
 </rss>

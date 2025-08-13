@@ -1,8 +1,0 @@
-{
-   "baseURL": "https://example.org/",
-   "languageCode": "en-us",
-   "title": "Max's hugo site",
-   "theme": [
-      "hugotex"
-   ]
-}

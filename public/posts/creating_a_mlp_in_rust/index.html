@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="This blog(/tutorial maybe?) is the first part in a walk-through of the process I followed to build a multi-layer-perceptron (MLP) from scratch in rust. Followed by using it to classify the MNIST dataset. The source code for the MLP can be found here. This means no pytorch or tensorflow, both of which have rust bindings, just the rust standard library and the beautiful linear algebra crate, nalgebra.
+Why from scratch I am not entirely sure. Initially, I watched the first four episodes in the excellent 3blue1brown series on neural networks. This piqued my interest and as I had an abundance of free time (having just finished my leaving school exams) I decided to implement a MLP for MNIST like the videos prescribed. I considered using the previously discussed machine learning libraries, but they felt a bit like cheating and there was something (perhaps deceivingly) alluring about implementing the maths behind machine learning. So, I went onwards.
+" />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="//localhost:1313/posts/creating_a_mlp_in_rust/" />
+
+
+    <title>
+        
+            The maths behind the MLP :: Max&#39;s blurtie blog 
+        
+    </title>
+
+
+
+
+
+  <link rel="stylesheet" href="/main.min.07ea7ac7da67e2e153a7dfa2457bc6a19cca824288d175e223fadc579041bc51.css" integrity="sha256-B&#43;p6x9pn4uFTp9&#43;iRXvGoZzKgkKI0XXiI/rcV5BBvFE=" crossorigin="anonymous">
+
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="The maths behind the MLP">
+  <meta itemprop="description" content="This blog(/tutorial maybe?) is the first part in a walk-through of the process I followed to build a multi-layer-perceptron (MLP) from scratch in rust. Followed by using it to classify the MNIST dataset. The source code for the MLP can be found here. This means no pytorch or tensorflow, both of which have rust bindings, just the rust standard library and the beautiful linear algebra crate, nalgebra.
+Why from scratch I am not entirely sure. Initially, I watched the first four episodes in the excellent 3blue1brown series on neural networks. This piqued my interest and as I had an abundance of free time (having just finished my leaving school exams) I decided to implement a MLP for MNIST like the videos prescribed. I considered using the previously discussed machine learning libraries, but they felt a bit like cheating and there was something (perhaps deceivingly) alluring about implementing the maths behind machine learning. So, I went onwards.">
+  <meta itemprop="datePublished" content="2025-08-11T10:45:32+01:00">
+  <meta itemprop="dateModified" content="2025-08-11T10:45:32+01:00">
+  <meta itemprop="wordCount" content="1343">
+  <meta itemprop="keywords" content="Making an MLP in Rust, From Scratch, for MNIST">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="The maths behind the MLP">
+  <meta name="twitter:description" content="This blog(/tutorial maybe?) is the first part in a walk-through of the process I followed to build a multi-layer-perceptron (MLP) from scratch in rust. Followed by using it to classify the MNIST dataset. The source code for the MLP can be found here. This means no pytorch or tensorflow, both of which have rust bindings, just the rust standard library and the beautiful linear algebra crate, nalgebra.
+Why from scratch I am not entirely sure. Initially, I watched the first four episodes in the excellent 3blue1brown series on neural networks. This piqued my interest and as I had an abundance of free time (having just finished my leaving school exams) I decided to implement a MLP for MNIST like the videos prescribed. I considered using the previously discussed machine learning libraries, but they felt a bit like cheating and there was something (perhaps deceivingly) alluring about implementing the maths behind machine learning. So, I went onwards.">
+
+
+
+    <meta property="og:url" content="//localhost:1313/posts/creating_a_mlp_in_rust/">
+  <meta property="og:site_name" content="Max&#39;s blurtie blog">
+  <meta property="og:title" content="The maths behind the MLP">
+  <meta property="og:description" content="This blog(/tutorial maybe?) is the first part in a walk-through of the process I followed to build a multi-layer-perceptron (MLP) from scratch in rust. Followed by using it to classify the MNIST dataset. The source code for the MLP can be found here. This means no pytorch or tensorflow, both of which have rust bindings, just the rust standard library and the beautiful linear algebra crate, nalgebra.
+Why from scratch I am not entirely sure. Initially, I watched the first four episodes in the excellent 3blue1brown series on neural networks. This piqued my interest and as I had an abundance of free time (having just finished my leaving school exams) I decided to implement a MLP for MNIST like the videos prescribed. I considered using the previously discussed machine learning libraries, but they felt a bit like cheating and there was something (perhaps deceivingly) alluring about implementing the maths behind machine learning. So, I went onwards.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-08-11T10:45:32+01:00">
+    <meta property="article:modified_time" content="2025-08-11T10:45:32+01:00">
+
+
+
+
+
+
+    <meta property="article:published_time" content="2025-08-11 10:45:32 &#43;0100 BST" />
+
+
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="//localhost:1313/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text ">
+                nix-shell -p hugo</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/posts/">Posts</a></li><li><a href="/series/">Series</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        7 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="//localhost:1313/posts/creating_a_mlp_in_rust/">The maths behind the MLP</a>
+      </h1>
+
+      
+
+      
+
+      
+
+      <div class="post-content">
+        <p>This blog(/tutorial maybe?) is the first part in a walk-through of the process I followed to build a multi-layer-perceptron (MLP) from scratch in rust. Followed by using it to classify the <a href="https://en.wikipedia.org/wiki/MNIST_database">MNIST dataset</a>. The source code for the MLP can be found <a href="https://github.com/max-amb/number_recognition">here</a>.
+This means no <a href="https://github.com/LaurentMazare/tch-rs">pytorch</a> or <a href="https://github.com/tensorflow/rust">tensorflow</a>, both of which have rust bindings, just the rust standard library and the beautiful linear algebra crate, <a href="https://nalgebra.rs/">nalgebra</a>.</p>
+<h1 id="why-from-scratch">Why from scratch</h1>
+<p>I am not entirely sure. Initially, I watched the first four episodes in the excellent <a href="https://youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&amp;si=VXW032Kq09cHEgpa">3blue1brown series on neural networks</a>.
+This piqued my interest and as I had an abundance of free time (having just finished my leaving school exams) I decided to implement a MLP for MNIST like the videos prescribed.
+I considered using the previously discussed machine learning libraries, but they felt a bit like cheating and there was something (perhaps deceivingly) alluring about implementing the maths behind machine learning.
+So, I went onwards.</p>
+<h1 id="the-maths">The maths</h1>
+<p>This post is really focused on the algorithmic mathematics, and will not go into much - if any - intuition about it.
+If you are interested in the intuition behind the mathematics I highly recommend the <a href="https://youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&amp;si=VXW032Kq09cHEgpa">3blue1brown series on neural networks</a> or this <a href="https://eng.libretexts.org/Bookshelves/Computer_Science/Applied_Programming/Neural_Networks_and_Deep_Learning_(Nielsen)">open source textbook on machine learning</a>.</p>
+<h2 id="notation">Notation</h2>
+<p>We define the j&rsquo;th node in the $L$&lsquo;th layer to have a value of $a_j^{[L]}$. Layer $L$ is the output layer, layer $L-1$ is the layer that feeds into layer $L$ and so on. $a_j^{[L]}$ is calculated by summing the input nodes multiplied by their weights followed by the bias being added to that sum, then applying an activation function to that sum. So, if we denote our activation function as $f$. We have:</p>
+$$
+a_j^{[L]} = f((\sum_i a_i^{[L-1]}\cdot \omega_{ji}^{[L]}) + b_j^{[L]})
+$$<p>Here you can see how we denote weights: $\omega_{ji}^{[L]}$ represents the weight connecting node $a_i^{[L-1]}$ to node $a_j^{[L]}$.
+You can think of it as the weights and biases of layer $L$ are used to calculate the value of the node in layer $L$.
+The seemingly flipped notation for the subscript of the weights is because when we are using matrix multiplication this is how the matrix must be layed out.
+The columns of the matrix must line up with the input neurons and the rows the output neurons for the multiplication to be valid.
+Otherwise, the dimensions would be wrong.</p>
+<p>To simplify this, we define $z_j^{[L]}$ to be the z value of the $j$&lsquo;th node in layer $L$. The z value of a node is the value of a node <strong>before</strong> the activation function is applied to the node.
+So
+</p>
+$$
+z_j^{[L]} = (\sum_i a_i^{[L-1]}\cdot \omega_{ji}^{[L]}) + b_j^{[L]}
+$$<p>This simplifies our previous expression of $a_j^{[L]}$ to:
+</p>
+$$
+a_j^{[L]} = f(z_j^{[L]})
+$$<p>Also, we must first specify that we are using quadratic loss for this example, and it will be denoted, $L$, i.e. $L = \sum_i (a_i - \hat{a_i})^2$. We use $\hat{a_i}$ to denote the expected value of node $a_i$ and $a_i$ to denote the observed value.
+For example, we may have an observed output of:
+</p>
+$$
+\begin{bmatrix} 0.858 \\ 0.450 \\ 0.646 \end{bmatrix}
+$$<p>
+but an expected/label output of:
+</p>
+$$
+\begin{bmatrix} 0 \\ 1 \\ 0\end{bmatrix}
+$$<p>
+This means that $a_0 = 0.858$ and $\hat{a_0} ( = \hat{a_2} ) = 0$.</p>
+<p>If you are skim reading this, please also check <a href="#added-notation">some added notation</a>.</p>
+<h2 id="forward-pass">Forward pass</h2>
+<p>The forward pass takes the input to the neural network (some vector) and effectively <em>applies</em> the neural network to the input, transforming it to an output vector.</p>
+<h2 id="backpropagation">Backpropagation</h2>
+<h3 id="output-layer-derivatives">Output layer derivatives</h3>
+<p>In order to begin backprop, we need to determine how much we need to change the output nodes values by.
+This can be done with partial derivatives, i.e. calculating: $\frac{\partial L}{\partial a_j^{[L]}}$. This will tell us how much the $a_j^{[L]}$&rsquo;s  observed value needs to change by.
+Here we use $a_j^{[L]}$ to denote the node we are calculating with respect to and we use $i$ as the <em>iterator</em> as such.</p>
+$$
+\begin{aligned}
+\frac{\partial L}{\partial a_j^{[L]}} & = \frac{\partial \sum_i (a_i^{[L]} - \hat{a_i^{[L]}})^2}{\partial a_j^{[L]}} \\
+& = \frac{\partial}{\partial a_j^{[L]}} (a_0^{[L]} - \hat{a_0^{[L]}})^2 + (a_1^{[L]} - \hat{a_1^{[L]}})^2 + ...\ +(a_i^{[L]} - \hat{a_i^{[L]}})^2 \\
+& = \frac{\partial}{\partial a_j^{[L]}} (a_j^{[L]} - \hat{a_j^{[L]}})^2 \\
+& = 2 \cdot (a_j^{[L]} - \hat{a_j^{[L]}})
+\end{aligned}
+$$<p>This is all well and good finding the amount $a_j^{[L]}$ needs to change by, but we (obviously) cannot directly change the value of $a_j^{[L]}$, we can only influence it via changing it&rsquo;s weights and biases.</p>
+<h4 id="bias-derivative">Bias derivative</h4>
+<p>So we need to find $\frac{\partial L}{\partial b_j^{[L]}}$. We can do it with some <em><strong>chain rule!!</strong></em>.
+</p>
+$$
+\frac{\partial L}{\partial b_j^{[L]}} = \frac{\partial L}{\partial a_j^{[L]}} \frac{\partial a_j^{[L]}}{\partial z_j^{[L]}} \frac{\partial z_j^{[L]}}{\partial b_j^{[L]}}
+$$<p>We already know:</p>
+$$
+\frac{\partial L}{\partial a_j^{[L]}} = 2 \cdot (a_j^{[L]} - \hat{a_j^{[L]}})
+$$<p>To determine $\frac{\partial a_j^{[L]}}{\partial z_j^{[L]}}$ we use our previous definition of $a_j^{[L]} = f(z_j^{[L]})$:</p>
+$$
+\begin{aligned}
+\frac{\partial a_j^{[L]}}{\partial z_j^{[L]}} & = \frac{\partial}{\partial z_j^{[L]}} f(z_j^{[L]}) \\
+& = f'(z_j^{[L]}) \cdot 1 = f'(z_j^{[L]})
+\end{aligned}
+$$<p>
+$\frac{\partial f}{\partial {z_j^{[L]}}}$ obviously depends on the activation function.</p>
+<p>Finally, to determine $\frac{\partial z_j^{[L]}}{\partial b_j^{[L]}}$ is trivial as $z_j^{[L]} = (\sum_i a_i^{[L-1]}\cdot \omega_{ji}^{[L]}) + b_j^{[L]}$.
+So:
+</p>
+$$
+\frac{\partial z_j^{[L]}}{\partial b_j^{[L]}} = \frac{\partial}{\partial b_j^{[L]}} b_j^{[L]} = 1
+$$<p>
+This falls out because when doing a partial derivative we discard all the other terms, so in this case, we are left with just the $b_j^{[L]}$ term.</p>
+$$
+\therefore \frac{\partial L}{\partial b_j^{[L]}} = \frac{\partial L}{\partial a_j^{[L]}} \frac{\partial a_j^{[L]}}{\partial z_j^{[L]}} \frac{\partial z_j^{[L]}}{\partial b_j^{[L]}} = 2 \cdot (a_j^{[L]} - \hat{a_j^{[L]}})\ f'(z_j^{[L]})
+$$<h4 id="weight-derivative">Weight derivative</h4>
+<p>To find $\frac{\partial L}{\partial \omega_{ji}^{[L]}}$ we can use our work in <a href="#bias-derivative">finding the bias derivative</a>.</p>
+<blockquote>
+<p>If you are confused about this notation please look back to <a href="#notation">the notation section</a>.
+Remember here we are travelling from node $a_i^{[L-1]}$ to node $a_j^{[L]}$ via $\omega_{ji}^{[L]}$.</p></blockquote>
+<p>We need to find $\frac{\partial L}{\partial \omega_{ji}^{[L]}}$ which similarly to before, via the <em><strong>chain rule</strong></em>, we can determine to be:
+</p>
+$$
+\frac{\partial L}{\partial \omega_{ji}^{[L]}} = \frac{\partial L}{\partial a_j^{[L]}} \frac{\partial a_j^{[L]}}{\partial z_j^{[L]}} \frac{\partial z_j^{[L]}}{\partial \omega_{ji}^{[L]}}
+$$<p>We have already worked out $\frac{\partial L}{\partial z_j^{[L]}}$:
+</p>
+$$
+\frac{\partial L}{\partial z_j^{[L]}} = \frac{\partial L}{\partial a_j^{[L]}} \frac{\partial a_j^{[L]}}{\partial z_j^{[L]}} = 2 \cdot (a_j^{[L]} - \hat{a_j^{[L]}})\ f'(z_j^{[L]})
+$$<p>
+So we just need to find $\frac{\partial z_j^{[L]}}{\partial \omega_{ji}^{[L]}}$:
+</p>
+$$
+\begin{aligned}
+\frac{\partial z_j^{[L]}}{\partial \omega_{ji}^{[L]}} & = \frac{\partial}{\partial \omega_{ji}^{[L]}} z_j^{[L]} \\
+& = \frac{\partial}{\partial \omega_{ji}^{[L]}} a_i^{[L-1]} \omega_{ji}^{[L]} \\
+& = a_i^{[L-1]} 
+\end{aligned}
+$$$$
+\therefore \frac{\partial L}{\partial \omega_{ji}^{[L]}} = 2 \cdot (a_j^{[L]} - \hat{a_j^{[L]}})\ f'(z_j^{[L]}) \cdot a_i^{[L-1]}
+$$<h4 id="delta">Delta</h4>
+<p>If you read the previous two sections carefully enough, you may notice a consistency.
+We used $\frac{\partial L}{\partial a_j^{[L]}} \frac{\partial a_j^{[L]}}{\partial z_j^{[L]}}$ in both of these calculations.
+Mathematicians, in their constant search for more compact notation, have decided to denote this as $\delta_j^{[L]}$, i.e.</p>
+$$
+\frac{\partial L}{\partial a_j^{[L]}} \frac{\partial a_j^{[L]}}{\partial z_j^{[L]}} = \delta_j^{[L]} = 2 \cdot (a_j^{[L]} - \hat{a_j^{[L]}})\ f'(z_j^{[L]})
+$$<p>This means we can represent the <a href="#bias-derivative">bias derivative</a> as simply:
+</p>
+$$
+\frac{\partial L}{\partial b_j^{[L]}} = \delta_j^{[L]}
+$$<p>
+and the <a href="#weight-derivative">weight derivative</a> as:
+</p>
+$$
+\frac{\partial L}{\partial \omega_{ji}^{[L]}} = \delta_j^{[L]} a_i^{[L-1]}
+$$<h4 id="representation-of-output-layer-backprop-as-a-matrix-operation">Representation of output layer backprop as a matrix operation</h4>
+<p>We can represent backpropagation as a series of matrix operations which allows for more concise notation.
+To find the delta values we use the <a href="https://en.wikipedia.org/wiki/Hadamard_product_(matrices)">hadarmard product</a> denoted $\odot$.</p>
+<p>To do this section succinctly we must further define some more <em><strong>notation</strong></em> woop woop!</p>
+<h5 id="added-notation">Added notation</h5>
+<p>We define a new vector $\nabla_{a^{[L]}}L$, to be the derivative of the loss function with respect to each element in the output layer ($a^{[L]}$).
+Note you may see this written as just $\nabla_{a}L$ to be more concise.
+Therefore:
+</p>
+$$
+\nabla_{a}L = \begin{bmatrix} 2 \cdot (a_0^{[L]} - \hat{a_0^{[L]}}) \\\ 2 \cdot (a_1^{[L]} - \hat{a_1^{[L]}}) \\\ ... \\\ 2 \cdot (a_n^{[L]} - \hat{a_n^{[L]}}) \end{bmatrix}
+$$<p>
+for $n$ nodes in the output layer.</p>
+<p>This allows us to write $\delta^{[L]}$ (the vector of the delta values (which are also the biase values (ooo indented brackets))):
+</p>
+$$
+\delta^{[L]} = \nabla_a L \ \odot\  f'(z^{[L]})
+$$<p>
+Where $z^{[L]}$ is the vector of the z values and we apply $f'$ to every value in that vector.</p>
+<p>So now we have a vector of delta values:
+</p>
+$$
+\delta^{[L]} = \begin{bmatrix} \delta_0^{[L]} \\\ \delta_1^{[L]} \\\ ... \\\ \delta_n^{[L]} \end{bmatrix}
+$$<p>
+again, for $n$ nodes in the output layer.</p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        1343 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2025-08-11 10:45
+        
+
+         
+          
+        
+      </p>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$','$$']]
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+};
+</script>
+
+<script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="/bundle.min.ad54ad97364f77ede35def9096b162bb1f0b3973aa50b080f5e82fa147f6882e2a7200d7535adbf9b51bebf939f1c1ca9bbe6be87530092aca720eac4a226fda.js" integrity="sha512-rVStlzZPd&#43;3jXe&#43;QlrFiux8LOXOqULCA9egvoUf2iC4qcgDXU1rb&#43;bUb6/k58cHKm75r6HUwCSrKcg6sSiJv2g=="></script>
+
+
+
+
+    </body>
+</html>
