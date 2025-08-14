@@ -8,6 +8,7 @@ draft = false
 
 This blog(/tutorial maybe?) is the first part in a walk-through of the process I followed to build a multi-layer-perceptron (MLP) from scratch in rust. Followed by using it to classify the [MNIST dataset](https://en.wikipedia.org/wiki/MNIST_database). The source code for the MLP can be found [here](https://github.com/max-amb/number_recognition).
 This means no [pytorch](https://github.com/LaurentMazare/tch-rs) or [tensorflow](https://github.com/tensorflow/rust), both of which have rust bindings, just the rust standard library and the beautiful linear algebra crate, [nalgebra](https://nalgebra.rs/).
+If you just want to get the final equations and be done (which I do not recommend), see the [summary](#summary).
 
 ## Why from scratch
 I am not entirely sure. Initially, I watched the first four episodes in the excellent [3blue1brown series on neural networks](https://youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&si=VXW032Kq09cHEgpa).
@@ -22,7 +23,9 @@ I recommend you follow along with a **PEN AND PAPER** like all maths.
 
 ## Notation
 
-We define the j'th node in the $l$'th layer to have a value of $a_j^{[l]}$. Layer $L$ is the output layer, layer $L-1$ is the layer that feeds into layer $L$ and so on. $a_j^{[l]}$ is calculated by summing the input nodes multiplied by their weights followed by the bias being added to that sum, then applying an activation function to that sum. So, if we denote our activation function as $f$. We have:
+We define the j'th node in the $l$'th layer to have a value of $a_j^{[l]}$. Layer $[L]$ is the output layer, layer $[L-1]$ is the layer that feeds into layer $[L]$ and so on. Note that this means that when we are working with the output layer we will be using $[L]$ and $[L-1]$ but for the general case we use $[l]$ and $[l-1]$.
+
+$a_j^{[l]}$ is calculated by summing the input nodes multiplied by their weights followed by the bias being added to that sum, then applying an activation function to that sum. So, if we denote our activation function as $f$. We have:
 
 $$
 a_j^{[l]} = f((\sum_i a_i^{[l-1]}\ \omega_{ji}^{[l]}) + b_j^{[l]})
@@ -130,6 +133,7 @@ That is all the forward pass is! Matrix operation, followed by activation functi
 ## Backpropagation
 ### Output layer derivatives
 In order to begin backpropagation, we need to determine how much we need to change the output nodes values by.
+Note that while working with the output layer we will be working with layers $[L]$ and $[L-1]$ as $[L]$ denotes the output layer and $[L-1]$ denotes the layer that feeds into the output layer.
 This can be done with partial derivatives, i.e. calculating: $\frac{\partial C}{\partial a_j^{[L]}}$. This will tell us how much the $a_j^{[L]}$'s  observed value needs to change by.
 Here we use $a_j^{[L]}$ to denote the node we are calculating with respect to (wrt.) and we use $i$ as the *iterator* as such.
 
@@ -297,10 +301,11 @@ $$
 \frac{\partial C}{\partial b^{[L]}} = \delta^{[L]}, 
 \frac{\partial C}{\partial \omega^{[L]}} = \delta^{[L]} a^{{[L-1]}^{T}}
 $$
-where $\delta^{[L]} = \nabla_a L \ \odot\  f'(z^{[L]})$
+where $\delta^{[L]} = \nabla_a C \ \odot\  f'(z^{[L]})$
 
 ### Hidden layer derivatives
 We begin this section similarly to how we began [for the output layer](#output-layer-derivatives). We need the derivative of the loss wrt. to a node.
+Note that in this section we use layers $[l]$ and $[l-1]$ as we are working with any arbitrary layer.
 However, now we need the derivative of the cost wrt. an arbitrary node in the layer $[l-1]$. Lets call it $a_j^{[l-1]}$:
 $$
 \frac{\partial C}{\partial a_j^{[l-1]}} = \sum_i \frac{\partial C}{\partial a_i^{[l]}} \frac{\partial a_i^{[l]}}{\partial z_i^{[l]}} \frac{\partial z_i^{[l]}}{\partial a_j^{[l-1]}}
@@ -331,15 +336,16 @@ $$
 \frac{\partial z_i^{[l]}}{\partial a_j^{[l-1]}} = \frac{\partial}{\partial a_j^{[l-1]}} (\sum_k a_k^{[l-1]}\ \omega_{ik}^{[l]}) + b_i^{[l]}
 \end{aligned}
 $$
-There will be one case in the sum where $j=k$ (in the rest of the cases $j!=k$ so the terms will disappear):
+There will be one case in the sum where $j=k$ (in the rest of the cases $j\not =k$ so the terms will disappear):
 $$
 \begin{aligned}
-\frac{\partial}{\partial a_j^{[l-1]}} (\sum_k a_k^{[l-1]}\ \omega_{ik}^{[l]}) + b_i^{[l]} & = \frac{\partial}{\partial a_j^{[l-1]}} a_k^{[l-1]}\ \omega_{ik}^{[l]} \\
-& = \omega_{ik}^{[l]}
-= \omega_{ij}^{[l]} \\
-\implies \frac{\partial z_i^{[l]}}{\partial a_j^{[l-1]}} = \omega_{ij}^{[l]}
+\frac{\partial}{\partial a_j^{[l-1]}} (\sum_k a_k^{[l-1]}\ \omega_{ik}^{[l]}) + b_i^{[l]} & = \frac{\partial}{\partial a_j^{[l-1]}} a_0^{[l-1]} \ \omega_{i0}^{[l-1]} + a_1^{[l-1]} \ \omega_{i1}^{[l-1]} + ... + a_k^{[l-1]} \ \omega_{ik}^{[l-1]} \\
+& = \frac{\partial}{\partial a_j^{[l-1]}} a_j^{[l-1]}\ \omega_{ij}^{[l]} \text{  as in all other cases }k\not = j \text{ so the derivative is 0} \\
+& = \omega_{ij}^{[l]} \\
+& \implies \frac{\partial z_i^{[l]}}{\partial a_j^{[l-1]}} = \omega_{ij}^{[l]}
 \end{aligned}
 $$
+
 
 So, substituting back in:
 $$
@@ -482,8 +488,36 @@ $$
 $$
 where $\delta^{[l-1]} = ({\omega^{[l]}}^T \delta^{[l]}) \odot f'(z^{[l-1]})$
 
-## Conclusion
+## Summary 
 This concludes the mathematics behind the MLP.
+Here are all of the equations that we derived today:
+
+Forward pass:
+$$
+\begin{aligned}
+\forall \ l \in & \text{ layers of the network} \\
+& z^{[l]} = \omega^{[l]} a^{[l-1]} + b^{[l]} \\
+& a^{[l]} = f(z^{[l]})
+\end{aligned}
+$$
+
+Backpropagation output layer (between layers $[L]$ and $[L-1]$):
+$$
+\begin{aligned}
+& \delta^{[L]} = \nabla_a C \ \odot\  f'(z^{[L]}) \\
+& \frac{\partial C}{\partial b^{[L]}} = \delta^{[L]} \\
+& \frac{\partial C}{\partial \omega^{[L]}} = \delta^{[L]} a^{{[L-1]}^{T}} 
+\end{aligned}
+$$
+
+Backpropagation for all other layers (for layers $[l] < [L]$):
+$$
+\begin{aligned}
+& \delta^{[l-1]} = ({\omega^{[l]}}^T \delta^{[l]}) \odot f'(z^{[l-1]}) \\
+& \frac{\partial C}{\partial b^{[l-1]}} = \delta^{[l-1]} \\
+& \frac{\partial C}{\partial \omega^{[l-1]}} = \delta^{[l-1]} a^{{[l-2]}^{T}} \\
+\end{aligned}
+$$
 
 We began by working out how to transform an input into its output through the neural network.
 Followed by determining the derivatives of the weights and biases wrt. the loss for the nodes connecting to the output layer.
