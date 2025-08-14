@@ -1,14 +1,22 @@
 baseURL = "max-amb.github.io"
 languageCode = "en-us"
 title = "Max's blurtie blog"
-theme = "hello-friend-ng"
+author = "Max Ambaum"
+enableRobotsTXT = true
+theme = "hugo-bearblog"
 
 [taxonomies]
-  category = "blog"
   tag = "tags"
+  category = "categories"
   series = "series"
 
 [markup]
+  [markup.highlight]
+    style = 'friendly'
+    lineNos = true
+    lineNumbersInTable = false
+    codeFences = true
+
   [markup.goldmark]
     [markup.goldmark.extensions]
       [markup.goldmark.extensions.passthrough]
@@ -18,36 +26,13 @@ theme = "hello-friend-ng"
           inline = [['$', '$']]
 
 [params]
-  dateFormat = "02 Jan 2006"
+  favicon = "favicon.svg"
+  enablePostNavigator = true
   math = true
-  contentTypeName = "posts"
   DefaultContentLanguage = "en"
-  homeSubtitle = "Officially a student, but I do lots of things :)"
-  
-  [params.author]
-    name = "Max Ambaum"
-
-  [params.logo]
-    logoText = "nix-shell -p hugo"
-
-  [[params.social]]
-    name = "github"
-    url = "https://github.com/max-amb"
-
-[[menu.main]]
-  identifier = "posts"
-  name = "Posts"
-  url = "/posts/"
-  weight = 200
-
-[[menu.main]]
-  identifier = "series"
-  name = "Series"
-  url = "/series/"
-  weight = 300
+  hideMadeWithLine = false
 
 [markup.tableOfContents]
   startLevel = 2
   endLevel = 6
   ordered = false
-
