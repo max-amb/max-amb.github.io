@@ -3,10 +3,14 @@ title = 'The maths behind the MLP'
 series = ['The making of a MLP']
 date = '2025-08-13'
 draft = false 
-toc = true
 +++
 
+{{< details title="Contents" >}}
+{{< toc >}}
+{{< /details >}}
+
 This blog(/tutorial maybe?) is the first part in a walk-through of the process I followed to build a multi-layer-perceptron (MLP) from scratch in rust. Followed by using it to classify the [MNIST dataset](https://en.wikipedia.org/wiki/MNIST_database). The source code for the MLP can be found [here](https://github.com/max-amb/number_recognition).
+
 This means no [pytorch](https://github.com/LaurentMazare/tch-rs) or [tensorflow](https://github.com/tensorflow/rust), both of which have rust bindings, just the rust standard library and the beautiful linear algebra crate, [nalgebra](https://nalgebra.rs/).
 If you just want to get the final equations and be done (which I do not recommend), see the [summary](#summary).
 
@@ -108,7 +112,10 @@ $$
 $$
 we simply need to add the biases vector to get $z^{[l]}$, i.e.:
 $$
-z^{[l]} = \begin{bmatrix} \sum_{i}^{m}a_i^{[l-1]}\omega_{0i}^{[l]} \\ \sum_{i}^{m}a_i^{[l-1]}\omega_{1i}^{[l]} \\ \vdots \\ \sum_{i}^{m}a_i^{[l-1]}\omega_{ni}^{[l]} \end{bmatrix} +\begin{bmatrix} b_0^{[l]} \\ b_1^{[l]} \\ \vdots \\ b_n^{[l]} \end{bmatrix} = \omega^{[l]}a^{[l-1]} + b^{[l]} 
+\begin{aligned}
+z^{[l]} & = \begin{bmatrix} \sum_{i}^{m}a_i^{[l-1]}\omega_{0i}^{[l]} \\ \sum_{i}^{m}a_i^{[l-1]}\omega_{1i}^{[l]} \\ \vdots \\ \sum_{i}^{m}a_i^{[l-1]}\omega_{ni}^{[l]} \end{bmatrix} +\begin{bmatrix} b_0^{[l]} \\ b_1^{[l]} \\ \vdots \\ b_n^{[l]} \end{bmatrix} \\ 
+& = \omega^{[l]}a^{[l-1]} + b^{[l]} 
+\end{aligned}
 $$
 
 #### Vector of neuron values 
@@ -140,7 +147,7 @@ Here we use $a_j^{[L]}$ to denote the node we are calculating with respect to (w
 $$
 \begin{aligned}
 \frac{\partial C}{\partial a_j^{[L]}} & = \frac{\partial \sum_i (a_i^{[L]} - \hat{a_i^{[L]}})^2}{\partial a_j^{[L]}} \\
-& = \frac{\partial}{\partial a_j^{[L]}} (a_0^{[L]} - \hat{a_0^{[L]}})^2 + (a_1^{[L]} - \hat{a_1^{[L]}})^2 + ...\ +(a_i^{[L]} - \hat{a_i^{[L]}})^2 \\
+& = \frac{\partial}{\partial a_j^{[L]}} (a_0^{[L]} - \hat{a_0^{[L]}})^2 + (a_1^{[L]} - \hat{a_1^{[L]}})^2 +\ ...\ +(a_i^{[L]} - \hat{a_i^{[L]}})^2 \\
 & = \frac{\partial}{\partial a_j^{[L]}} (a_j^{[L]} - \hat{a_j^{[L]}})^2 \\
 & = 2 \ (a_j^{[L]} - \hat{a_j^{[L]}})
 \end{aligned}

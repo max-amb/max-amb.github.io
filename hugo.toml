@@ -1,6 +1,6 @@
 baseURL = "max-amb.github.io"
 languageCode = "en-us"
-title = "Max's blurtie blog"
+title = "Max's blog"
 author = "Max Ambaum"
 enableRobotsTXT = true
 theme = "hugo-bearblog"
@@ -12,10 +12,11 @@ theme = "hugo-bearblog"
 
 [markup]
   [markup.highlight]
-    style = 'friendly'
+    guessSyntax = true
     lineNos = true
     lineNumbersInTable = false
     codeFences = true
+    noclasses = false
 
   [markup.goldmark]
     [markup.goldmark.extensions]

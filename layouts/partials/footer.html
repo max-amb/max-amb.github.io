@@ -13,3 +13,12 @@ window.MathJax = {
 <script type="text/javascript"
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 </script>
+
+<style type="text/css" media="screen">
+@media (prefers-color-scheme: dark) { 
+  {{ partial "./css/syntax-dark.css" . | safeCSS }}
+}
+@media (prefers-color-scheme: light) { 
+  {{ partial "./css/syntax-light.css" . | safeCSS }} 
+}
+</style>
