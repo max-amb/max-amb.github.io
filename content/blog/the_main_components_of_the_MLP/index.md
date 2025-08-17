@@ -1,6 +1,6 @@
 +++
 title = "The main components of the MLP"
-date = "2025-08-14T21:41:40+01:00"
+date = "2025-08-17T00:00:00+01:00"
 series =  'The making of a MLP'
 draft = false
 +++
