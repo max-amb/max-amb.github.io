@@ -14,7 +14,7 @@ theme = "hugo-bearblog"
   [markup.highlight]
     guessSyntax = true
     lineNos = true
-    lineNumbersInTable = false
+    lineNumbersInTable = true
     codeFences = true
     noclasses = false
 
