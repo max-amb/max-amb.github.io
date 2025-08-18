@@ -1,5 +1,5 @@
 +++
-title = "~/about_me/"
+title = "~/about-me/"
 menu = "main"
 weight = 20
 +++

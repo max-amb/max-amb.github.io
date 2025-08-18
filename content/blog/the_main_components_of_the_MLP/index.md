@@ -105,7 +105,7 @@ pub fn new(
 
 ### Arguments
 An example input to the function could be `NN::new(&[784, 128, 128, 128, 10], InitialisationOptions::He, None)` (this example was taken from `main` in `main.rs`).
-This would create a network with an input layer of $784$ neurons, two hidden layers each with $128$ neurons, and an output layer of $10$ neurons.
+This would create a network with an input layer of $784$ neurons, three hidden layers each with $128$ neurons, and an output layer of $10$ neurons.
 The next argument specifies that the network's weights should be initialised with [He initialisation](https://doi.org/10.48550/arXiv.1502.01852). More on this [later](#initialisation-options)...
 The final argument (which is optional demonstrated by the `Option<>` type) specifies the alpha value to be used for the leaky ReLU activation function (if in use).
 
