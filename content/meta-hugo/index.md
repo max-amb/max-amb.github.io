@@ -2,6 +2,7 @@
 title = "~/meta-hugo/"
 menu = "main"
 weight = 30
+draft = true
 +++
 {{< details title="Contents">}}
 {{< toc >}}
