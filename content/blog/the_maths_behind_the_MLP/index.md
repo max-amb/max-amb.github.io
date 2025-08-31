@@ -58,6 +58,8 @@ Also, we must specify that we are using quadratic loss/cost (I will use the word
 $$
 C = \sum_i (a_i - \hat{a_i})^2
 $$
+It is worth noting however, this blog is entirely suitable to read if you are using any other loss function.
+All formulas are presented generally as well as specifically (for quadratic loss) meaning as long as you can perform some derivatives yourself you shall be fine.
 We use $\hat{a_i}$ to denote the expected value of node $a_i$ and $a_i$ to denote the observed value.
 For example, we may have an observed output of:
 $$
