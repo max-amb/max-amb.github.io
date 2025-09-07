@@ -111,12 +111,12 @@ The final argument (which is optional demonstrated by the `Option<>` type) speci
 
 ### Network setup
 ```rust{lineNoStart = 6}
-let number_of_layers = layer_sizes.len();
-let mut rng = rand::rng();
+    let number_of_layers = layer_sizes.len();
+    let mut rng = rand::rng();
 
-let layers: Vec<DVector<f32>> = (0..number_of_layers)
-    .map(|x| DVector::from_element(layer_sizes[x] as usize, 0.0))
-    .collect();
+    let layers: Vec<DVector<f32>> = (0..number_of_layers)
+        .map(|x| DVector::from_element(layer_sizes[x] as usize, 0.0))
+        .collect();
 ```
 
 To begin we attain the number of layers for use in our iterators and then we initialise a Random-Number-Generator (RNG) generator using the [rand crate](https://crates.io/crates/rand).
@@ -129,31 +129,31 @@ The value we choose doesn't matter as the layers neurons (obviously) have their 
 
 ### Weight initialisation
 ```rust{lineNoStart = 13}
-let weights: Vec<DMatrix<f32>> = match initialisation {
-    InitialisationOptions::Random => (1..number_of_layers)
-        .map(|x| {
-            DMatrix::from_fn(
-                layer_sizes[x] as usize,
-                layer_sizes[x - 1] as usize,
-                |_, _| rng.random_range(-1.0..=1.0),
-            )
-        })
-        .collect(),
-    InitialisationOptions::He => (1..number_of_layers)
-        .map(|x| {
-            let normal_dist =
-                Normal::new(0.0, (2.0_f32 / (layer_sizes[x - 1] as f32)).sqrt())
-                    .unwrap();
-            DMatrix::from_fn(
-                layer_sizes[x] as usize,
-                layer_sizes[x - 1] as usize,
-                |_, _| {
-                    normal_dist.sample(&mut rng)
-                },
-            )
-        })
-        .collect(),
-};
+    let weights: Vec<DMatrix<f32>> = match initialisation {
+        InitialisationOptions::Random => (1..number_of_layers)
+            .map(|x| {
+                DMatrix::from_fn(
+                    layer_sizes[x] as usize,
+                    layer_sizes[x - 1] as usize,
+                    |_, _| rng.random_range(-1.0..=1.0),
+                )
+            })
+            .collect(),
+        InitialisationOptions::He => (1..number_of_layers)
+            .map(|x| {
+                let normal_dist =
+                    Normal::new(0.0, (2.0_f32 / (layer_sizes[x - 1] as f32)).sqrt())
+                        .unwrap();
+                DMatrix::from_fn(
+                    layer_sizes[x] as usize,
+                    layer_sizes[x - 1] as usize,
+                    |_, _| {
+                        normal_dist.sample(&mut rng)
+                    },
+                )
+            })
+            .collect(),
+    };
 ```
 
 Initially it is clear that weights depends on the `initialisation` variable and by association the `InitialisationOptions` enum.
@@ -189,9 +189,9 @@ He initialisation creates a normal distribution for each layer, using the layer 
 ### Bias initialisation
 The final integral part of the neural network making process is bias initialisation:
 ```rust{lineNoStart=39}
-let biases: Vec<DVector<f32>> = (1..number_of_layers)
-    .map(|x| DVector::from_fn(layer_sizes[x] as usize, |_, _| rng.random_range(-1.0..=1.0)))
-    .collect();
+    let biases: Vec<DVector<f32>> = (1..number_of_layers)
+        .map(|x| DVector::from_fn(layer_sizes[x] as usize, |_, _| rng.random_range(-1.0..=1.0)))
+        .collect();
 ```
 This simply randomly generates biases to fill the bias vectors for each layer (excluding the input layer via `(1..`).
 
@@ -206,7 +206,6 @@ Self {
     alpha,
 }
 ```
-
 The first line checks if the the function has been passed in an explicit alpha value (or just `None`).
 If so, this explicit alpha value is used (for example during tests in `tests.rs`) but otherwise the `unwrap_or()` ensures that that default alpha value is $0.01$.
 Just to reiterate, the alpha value is the value used in leaky ReLU for the gradient $<0$. In tests $0.2$ is used but generally a lower value (like $0.01$) is used.
@@ -224,8 +223,140 @@ Self {
 
 This is because the variable names are exactly the same as the structures component names, meaning it is what rust calls [redundant field names](https://rust-lang.github.io/rust-clippy/master/index.html#redundant_field_names).
 
+## The forward pass function
+This is the function that performs the forward pass we discussed in [the mathematically focused portion of this series]({{< ref "blog/the_maths_behind_the_MLP" >}}).
+It consists of repeated multplications for all the layers preceding the output layer followed by a different calculation for the final layer (as it depends on the loss/cost function in use).
+The code that performs the forward pass is as follows:
+```rust
+pub fn forward_pass(
+    network: &NN,
+    input: &DVector<f32>,
+    cost_function: &CostFunction,
+) -> Vec<DVector<f32>> {
+    let mut new_layers: Vec<DVector<f32>> = vec![input.clone()];
+    for layer in 0..network.weights.len() - 1 {
+        new_layers.push(
+            (&network.weights[layer] * &new_layers[layer] + &network.biases[layer])
+                .map(|x| activation_functions::leaky_relu(x, network.alpha)),
+        );
+    }
+    new_layers.push(match cost_function {
+        CostFunction::Quadratic => (&network.weights[network.weights.len() - 1]
+            * &new_layers[network.weights.len() - 1]
+            + &network.biases[network.weights.len() - 1])
+            .map(activation_functions::sigmoid),
+        CostFunction::CategoricalCrossEntropy => activation_functions::softmax(
+            &network.weights[network.weights.len() - 1]
+                * &new_layers[network.weights.len() - 1]
+                + &network.biases[network.weights.len() - 1],
+        ),
+    });
+    new_layers
+}
+```
+
+### Arguments
+The first argument is simply a `NN` object. This `NN` object needs to be read from to access the current biases and weights of the network.
+It is followed by a vector which is the input vector to the forward pass, in this case the image matrix flattened to a vector.
+The final argument indicates the cost function in use.
+`CostFunction` is (as indicated by `CostFunction::CategoricalCrossEntropy` and `CostFunction::Quadratic`) an enum which determines the cost function in use.
+It is worth noting there is an implementation for `CostFunction` which isn't necessary to this example and may be explored later.
+
+One thing of slight note is that all of the arguments are immutable references, this is useful (and was ordained) by the requirement for parallel training.
+It is useful as it means none of the arguments need to be mutably passed in allowing for multiple threads to be using the same `cost_function` and `network` as none of them modify the values of these variables.
+
+### Return value
+`forward_pass` returns a vector of column vectors, these are the updated layer values, i.e. the result of the forward pass.
+We cannot return them in the `NN` as we were passed in immutable reference (remember?).
+
+### Initialisation
+```rust{lineNoStart=6}
+    let mut new_layers: Vec<DVector<f32>> = vec![input.clone()];
+```
+
+To start with, we create an empty vector containing only a clone of the input vector.
+We will repeatedly push to this vector to fill up our return values!
+We must use a clone of the input, even though it is a slight performance cost, because we must return owned values and we do not own `input`.
+
+### All layers but one
+Next we determine the values for all of the layers in the neural network but the output layer:
+```rust{lineNoStart=7}
+    for layer in 0..network.weights.len() - 1 {
+        new_layers.push(
+            (&network.weights[layer] * &new_layers[layer] + &network.biases[layer])
+                .map(|x| activation_functions::leaky_relu(x, network.alpha)),
+        );
+    }
+```
+We iterate through the weights stopping just before the final weights (which will be used to determine the final layer), pushing a new layer to our `new_layers` vector of vectors.
+
+We start by determining $z^{[l]}$ for our layer (from [the maths]({{< ref "blog/the_maths_behind_the_MLP" >}})):
+$$
+z^{[l]} = \omega^{[l]} a^{[l-1]} + b^{[l]}
+$$
+It is not immediately obvious that:
+```rust{lineNoStart=9}
+    (&network.weights[layer] * &new_layers[layer] + &network.biases[layer])
+```
+is equivalent to our formula.
+Our formula specifies $a^{[l-1]}$ whereas it seems we use the $a^{[l]}$ so what gives?
+
+Well, it all has to do with our array indexes.
+As we begin iterating over the weights, we begin by looking at the weights matrix (and biases vector) that connects layer $0$ to layer $1$ (i.e. looking at $\omega^{[1]}$ that connects $a^{[0]}$ to $a^{[1]}$).
+This means that, $\omega^{[1]}$ is at `network.weights[0]` (and similarly $b^{[1]}$ is at `network.biases[0]`).
+So, for the first layer, we must be doing:
+```rust
+    (&network.weights[0] * &new_layers[0] + &network.biases[0])
+```
+and that is why we end up with our code like so.
+
+After calculating $z^{[l]}$ (for $l \neq L$) we must find the corresponding $a^{[l]}$, this is done with the map:
+```rust
+                .map(|x| activation_functions::leaky_relu(x, network.alpha)),
+```
+This is a rust function taken from functional programming, it acts on an iterator performing a closure for each element in the iterator.
+This closure operates on `x` (a singular value in the vector $z^{[l]}$) and performs the `leaky_relu` activation function on each `x`.
+
+### The one layer
+Time to determine the output layer.
+The values of the output layer heavily depend on the cost function in use (as is illustrated by the code):
+```rust{lineNoStart=13}
+    new_layers.push(match cost_function {
+        CostFunction::Quadratic => (&network.weights[network.weights.len() - 1]
+            * &new_layers[network.weights.len() - 1]
+            + &network.biases[network.weights.len() - 1])
+            .map(activation_functions::sigmoid),
+        CostFunction::CategoricalCrossEntropy => activation_functions::softmax(
+            &network.weights[network.weights.len() - 1]
+                * &new_layers[network.weights.len() - 1]
+                + &network.biases[network.weights.len() - 1],
+        ),
+    });
+```
+To begin with, you may notice a stark similarity between this section of code and the previously discussed section of code [earlier](#all-layers-but-one), this is no mistake, they really are quite similar. The calculation of $z^{[L]}$ is, of course, the same as the calculation of all previous $z^{[l]}$'s, hence we see:
+```rust{lineNoStart=19
+            &network.weights[network.weights.len() - 1]
+                * &new_layers[network.weights.len() - 1]
+                + &network.biases[network.weights.len() - 1],
+```
+So, the only difference, other than the indexes being set to the back of the arrays as expected, is what activation function we apply to our values.
+
+In the case of the `Quadratic` cost function, we are simply applying the sigmoid function to all of the values in our $z^{[L]}$.
+The `CategoricalCrossEntropy` function is slightly different as it requires the entire $z^{[L]}$ vector to be passed into the cost function (as opposed to the `map` function which we used before).
+
+The softmax function is defined as follows:
+$$
+f(z_i^{[L]}) = \frac{e^{z_i^{[L]}}}{\sum_{j=0}^{n-1} e^{z_j^{[L]}}} = a_i^{[L]}
+$$
+where $n$ is the number of elements in the output vector.
+<!---
+Perhaps add softmax impl
+-->
+
+Hence to calculate the value of a singular $a_i^{[L]}$, we require the entirety of $z^{[L]}$ to calculate the sum.
+
 ## Conclusion
-This concludes the post as of now, I am going on holiday and aim to come back early September when I will finish the post. I just kinda wanted to get something out, so here it is, unpolished and ugly.
+This concludes the post as of now, ~~I am going on holiday and aim to come back early September when I will finish the post. I just kinda wanted to get something out, so here it is, unpolished and ugly~~ I am now back from holiday and aim to finish it soon!
 
 {{< comments >}}
 
