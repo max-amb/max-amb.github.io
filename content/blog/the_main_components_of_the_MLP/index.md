@@ -349,7 +349,7 @@ $$
 f(z_i^{[L]}) = \frac{e^{z_i^{[L]}}}{\sum_{j=0}^{n-1} e^{z_j^{[L]}}} = a_i^{[L]}
 $$
 where $n$ is the number of elements in the output vector.
-<!---
+<!--
 Perhaps add softmax impl
 -->
 
