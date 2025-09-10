@@ -119,7 +119,7 @@ p' &= s_n' \cdot s_m' \\
 &= (s_n - (a-b))(s_m + (a-b)) \\
 &= s_n \cdot s_m + s_n(a-b) - s_m (a-b) - (a-b)^2 \\
 &= p + (a-b)(s_n - s_m) - (a-b)^2 \\
-\text{As } a > b \land s_n \lt s_m &\implies (a-b)(s_n - s_m) = -k \text{ where } k \text{ is a positive number}
+\text{As } a > b \land s_n \lt s_m &\implies (a-b)(s_n - s_m) = -k \text{ where } k \text{ is a positive number} \\
 \text{So } &= p - k - (a-b)^2
 \end{aligned}
 $$
@@ -148,11 +148,11 @@ You may have noticed that in both [lemma one](#lemma-one) and [lemma two](#lemma
 This means we can immediately generalise our solution to working on $k$ sets of the cardinality $j$ over an interval of size $k\cdot j$.
 
 Furthermore, you may notice we didn't use the fact that $[1,100]$ is contiguous, we could similarly have done the interval from $[2, 200]$ but with only even numbers, still using $10$ sets of cardinality $10$.
-This means we can just use any set of real distinct numbers, not necessarily just an interval.
+This means we can just use any set of positive real distinct numbers, not necessarily just an interval.
 
 Therefore, we can restate the problem like so:
 
-> Given a set of real distinct numbers length $k \cdot j$ (not necessarily an interval), and $k$ sets of cardinality $j$ that share no common elements hence covering the entire set.\
+> Given a set of positive real distinct numbers length $k \cdot j$ (not necessarily an interval), and $k$ sets of cardinality $j$ that share no common elements hence covering the entire set.\
 $s_n$ is the sum of the elements of $k_n$.\
 Minimise $s_1 \cdot s_2 \cdot s_3 \dots \cdot s_{k-1} \cdot s_{k}$
 
