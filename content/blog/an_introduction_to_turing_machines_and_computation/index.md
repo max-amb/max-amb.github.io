@@ -1,6 +1,6 @@
 +++
 title = 'An introduction to Turing machines and computation'
-date = '2026-04-04'
+date = '2026-04-03'
 draft = false
 +++
 
