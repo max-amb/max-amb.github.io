@@ -16,7 +16,7 @@ The study of Turing machines also leads to a proof of the halting problem, the f
 This shattered a lot of the initial perceptions of computation garnered in the 1930s by proving that computation, while it may be powerful, is fundamentally limited.
 
 This post finishes by proving the Turing-recognisability but lack of decidability of $\text{ACCEPTS}_\text{TM}$ (with a discussion on diagonalisation proofs following) after building up the necessary machinery and intuition.
-If this seems like gibberish, then don't worry, I have tried to assume a low baseline of knowledge which is built upon, and all non-trivial statements and definitions are accompanied by explanations and/or examples where possible.
+If this seems like gibberish, then don't worry, I have tried to assume a low baseline of knowledge (which is built upon), and all non-trivial statements and definitions are accompanied by explanations and/or examples where possible.
 Furthermore, any questions are welcome either by comment or by email (see the bottom of the page).
 
 While I attempted to be rigorous at some points where I felt it may aid understanding or provide some needed structure, this is not intended to be a particularly formal work and should not be treated as such.
@@ -26,13 +26,14 @@ While I attempted to be rigorous at some points where I felt it may aid understa
 While I imagine a majority of the people interested in this post will have an intuitive understanding of the Turing machine, I will just recount it here so we are all on the same page.
 A Turing machine consists of a read-write head that can move left and right along an infinitely long tape.
 
-It takes some input which it operates on, which is simply a sequence of letters, for example, it could be a binary string representing a program.
+It takes some input which it operates on, which is simply a sequence of letters. 
+For example, it could be a binary string representing a program.
 This input is put on the tape before the Turing machine starts its operation, while the rest of the tape is filled with blank characters.
 
 The read-write head contains a Finite State Machine (FSM) that, given its current state in the FSM and what it is currently reading off the tape, decides
-* The next state in the FSM
-* What to write to the tape
-* Whether to move left or right along the tape
+* the next state in the FSM
+* what to write to the tape
+* and whether to move left or right along the tape
 
 
 Our intuition gives rise to this useful diagram
@@ -43,7 +44,7 @@ Our intuition gives rise to this useful diagram
 I hope this (intuition focused) explanation suffices for the rest of the blog.
 * A FSM is a collection of states, typically denoted $Q$, and connections between those states.
 * They act on some input, which consists of individual letters, e.g. for input $1000111$ the first letter would be $1$, the next $0$, etc.
-* There exists a starting state, which is where the machine starts, and a set of final states, where the machine reports success.
+* There exists a starting state, which is where the machine starts, an accepting state, where the machine reports success, and a rejecting state, where the machine reports failure.
 
 For example, the below FSM recognises the input of any number of $a$'s, followed by 2 $b$'s.
 ![FSM](./images/fsm.svg)
@@ -56,7 +57,7 @@ From state 2, if we read a $b$, we go to our accepting state (typically denoted 
 Otherwise, again, it's the rejecting state.
 If we read anything after our two $b$'s, then the input is invalid, and hence we go to the rejecting state.
 
-I use the term Finite State Machine to represent a more general Deterministic Finite Automata (DFA) that has had a rejecting state instead of just dead states.
+I use the term Finite State Machine to represent a more general Deterministic Finite Automata (DFA) that has a rejecting state instead of just dead states.
 This is a term that is used in literature and it may be useful to research if you are interested in more.
 {{< /details >}}
 
@@ -83,12 +84,12 @@ In this area of computer science, models of computation (such as a Turing machin
 However, to understand languages, we must first understand words!
 
 ### Words/Strings
-A word, typically denoted $\omega$, is a finite ordered collection (or tuple) of elements of $\Sigma$.
+A word, typically denoted $\omega$, is a finite, ordered collection (or tuple) of elements of $\Sigma$.
 Recall that $\Sigma$ is the input alphabet of our Turing machine.
 We typically denote the set of all ordered collections as $\Sigma^*$, leaning on a notation gained from regular expressions (which can actually represent the same things as FSMs, but that's a slightly different hole).
 So we get that a word is any number of elements of $\Sigma$, or an element of $\Sigma^* = \bigcup_{n \ge 0} \Sigma^n$.
 
-This use of notation illustrates something which we may have missed, words can be empty!
+This use of regex notation illustrates something which we may have missed, words can be empty!
 The empty word is denoted $\epsilon$ and just represents the absence of any elements of $\Sigma$.
 
 For example, given $\Sigma = \{a, b, 0, 1\}$, valid words include
@@ -105,7 +106,7 @@ If separators are needed, we write $a \circ 0 \circ b$ with $\circ$ representing
 A language is a set of words that a machine potentially recognises/accepts.
 We say a machine recognises a word, $\omega$, if after giving the machine $\omega$ as input, it ends up in the accepting state.
 This process of *running* a machine on a word is called a *run*.
-So we can say that a machine recognises a language if for every word, $\omega$, in our language, a run of the machine on $\omega$ is accepting.
+So we can say that a machine recognises a language if for every word, $\omega$, in our language, the run of the machine on $\omega$ is accepting.
 
 Typically, we denote a language (just a set of words) as $L$, and the language recognised by a machine, $M$, as $\mathcal{L}(M)$.
 That is, $M$ recognises $L$ if and only if
@@ -117,6 +118,7 @@ $$
 This is where we first encounter the idea of *halting*.
 We classify two types of Turing machine, with respect to a language $L$, a recogniser and a decider.
 
+#### A recogniser
 A Turing machine, $M$, is a recogniser for the language $L$ if the Turing machine recognises/accepts every word in the language and does not accept any word outside of the language.
 We write this in notation as 
 $$
@@ -128,9 +130,10 @@ w \in L \implies M \text{ accepts } w\\
 w \notin L \implies M \text{ does not accept } w
 \end{cases}
 $$
-That is, $M$ is a recogniser for $\mathcal{L}(M)$.
 The distinction between "not accepting" and "rejecting" is that not accepting includes the possibility of a Turing machine looping forever, and this difference is the reason we need the next definition.
+We get from this definition that $M$ is a recogniser for $\mathcal{L}(M)$.
 
+#### A decider
 While that definition was a bit mundane, the definition for a decider is (very) slightly less!
 A Turing machine, $M$, is a decider for a language $L$ if 
 * it is a recogniser for $L$
@@ -159,6 +162,7 @@ This is the key distinction between a recogniser and a decider, a recogniser can
 Leaning the definitions laid out in [the previous section](#distinguishing-turing-machines-with-respect-to-a-language), we distinguish decidable languages and recognisable languages like so:
 * A language is Turing-recognisable [^5] if there exists a recogniser Turing machine for it 
 * A language is (Turing-)decidable [^6] if there exists a decider Turing machine for it
+
 From these definitions we immediately get that the decidable languages are a subset of the Turing-recognisable languages (as decidability is a restriction of recognisability).
 
 ## A first result
@@ -188,8 +192,8 @@ To begin, we construct a Turing machine $U$[^3] which on input $\langle M, \omeg
 * If $M$ rejects, $U$ rejects 
 * If $M$ loops forever, $U$ loops forever
 
-We can see that $U$ is a recogniser for $\text{ACCEPTS}_\text{TM}$ as any input $\langle M, \omega \rangle$ such that $M$ accepts $\omega$, will be accepted, and any input such that $M$ rejects $\omega$ will not be accepted, precisely the definition of $\text{ACCEPTS}_\text{TM}$.
-We also explicitly *handle* and allow for the infinite loop case, which makes $U$ a recogniser and not a decider.
+We can see that $U$ is a recogniser for $\text{ACCEPTS}_\text{TM}$ as any input $\langle M, \omega \rangle$ such that $M$ accepts $\omega$, will be accepted, and any input such that $M$ rejects $\omega$ will not be accepted. Precisely the definition of $\text{ACCEPTS}_\text{TM}$.
+We also explicitly allow for the infinite loop case, which makes $U$ a recogniser and not a decider.
 
 ## A second, more exciting result
 Now we will answer a more exciting, and hard, question.
@@ -248,7 +252,7 @@ If the second result felt slightly similar to the halting problem, it is because
 However, there is a bit more machinery we need to build.
 This machinery will be built up in the next post in this series where I aim to finish at the proof of the halting problem.
 
-I think the main achievement of this post is the [discussion about the second result](#a-discussion-of-the-proof).
+I think the main achievement of this post is the [discussion about the second result](#a-discussion-of-the-proof) (this section is quite hard to parse, for that I apologise).
 These links are everywhere in mathematics and, I feel, they truly form the backbone of the beauty in mathematics.
 I hope that I was able to make some of this beauty clear today.
 
@@ -261,7 +265,7 @@ Please leave questions or comments below or email me at max_a (at) e.email if yo
 [^2]: $\text{ACCEPTS}_\text{TM}$ is sometimes (most notably in Sipser) written as $A_\text{TM}$, I haven't here as I like to use $A$ to represent the possible decider for $\text{ACCEPTS}_\text{TM}$ in [the proof for the non-decidability of $\text{ACCEPTS}_\text{TM}$](#proof-of-non-decidability).
 [^3]: We use $U$ as the identifier for this Turing machine as a nod to the idea of a Universal Turing Machine (or UTM). These machines take a machine and some data as input and simply run the stored machine on the data. The idea of a UTM provided a pathway that the stored program concept (storing both program instructions and data in the same memory) took, which is how our computers work today!
 [^4]: This idea of *simulating* $A$ on our input may initially feel a bit alien, or just something that we wouldn't be allowed to do. Let me propose a possible way it could be done. Our decider, $D$, would contain an copy of $A$, and it would call on this copy to check $\langle M, \langle M \rangle \rangle$. This works as a Turing machine is just the [7-tuple](#a-mathematical-approach) (which is finite), so it can be built into another Turing machine. It is similar to a program calling on a library that it had been statically linked with during compilation.
-[^5]: Sometimes called recursively enumberable
-[^6]: Sometimes called recursive
+[^5]: Sometimes called recursively enumberable (RE)
+[^6]: Sometimes called recursive (R)
 
 {{< comments >}}
