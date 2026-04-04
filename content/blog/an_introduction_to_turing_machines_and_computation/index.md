@@ -43,7 +43,12 @@ The read-write head contains a Finite State Machine (FSM) that, given its curren
 
 Our intuition gives rise to this useful diagram
 
-![A Turing machine](./images/tm.svg)
+{{<
+    figure-dynamic
+    dark-src="./images/tm_dark.svg"
+    light-src="./images/tm.svg"
+    alt="A Turing machine"
+>}}
 
 {{< details title="If that left you wondering what a FSM was" >}}
 I hope this (intuition focused) explanation suffices for the rest of the blog.
@@ -52,7 +57,12 @@ I hope this (intuition focused) explanation suffices for the rest of the blog.
 * There exists a starting state, which is where the machine starts, an accepting state, where the machine reports success, and a rejecting state, where the machine reports failure.
 
 For example, the below FSM recognises the input of any number of $a$'s, followed by 2 $b$'s.
-![FSM](./images/fsm.svg)
+
+{{< figure-dynamic
+  dark-src="./images/fsm_dark.svg"
+  light-src="./images/fsm.svg"
+  alt="FSM"
+>}}
 
 The machine reads in $a$'s, until it reads either a $b$ or something else.
 If it reads a $b$ then it goes to state 2, otherwise, it goes to state 4, our rejecting state. 
@@ -82,7 +92,13 @@ where
 * $\delta : (Q \setminus \{ q_\text{acc}, q_\text{rej} \}) \times \Gamma \to Q \times \Gamma \times \{L, R\}$ is the transition function that takes us from one state and cell to another state and cell, rewriting the state we read in the process. We exclude $q_\text{acc}$ and $q_\text{rej}$ for input into the transition function as once the FSM for a Turing machine enters either of the states it immediately stops/halts.
 
 We can now modify our diagram to fit our new definition
-![A mathematically rigorous Turing machine](./images/mtm.svg)
+
+{{<
+    figure-dynamic
+    dark-src="./images/mtm_dark.svg"
+    light-src="./images/mtm.svg"
+    alt="A mathematically rigorous Turing machine"
+>}}
 
 ## Languages
 In this area of computer science, models of computation (such as a Turing machine) are built to recognise languages.
