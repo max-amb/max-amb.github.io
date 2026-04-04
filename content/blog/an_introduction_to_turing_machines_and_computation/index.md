@@ -15,9 +15,14 @@ Turing machines are so fundamental to Computer Science and the study of computab
 The study of Turing machines also leads to a proof of the halting problem, the fact that it is impossible to determine whether a program will halt or not given some input to that program.
 This shattered a lot of the initial perceptions of computation garnered in the 1930s by proving that computation, while it may be powerful, is fundamentally limited.
 
+### Should you read this?
 This post finishes by proving the Turing-recognisability but lack of decidability of $\text{ACCEPTS}_\text{TM}$ (with a discussion on diagonalisation proofs following) after building up the necessary machinery and intuition.
+
 If this seems like gibberish, then don't worry, I have tried to assume a low baseline of knowledge (which is built upon), and all non-trivial statements and definitions are accompanied by explanations and/or examples where possible.
 Furthermore, any questions are welcome either by comment or by email (see the bottom of the page).
+
+Alternatively, if you are already familiar with a formal approach to Turing machines and you are wondering if there is anything to gain from this post, I believe there might be in [this discussion about the connection between a proof of non-decidability and Cantor's theorem](#a-discussion-of-the-proof).
+To parse it it may be helpful to read [this proof](#a-second,-more-exciting-result).
 
 While I attempted to be rigorous at some points where I felt it may aid understanding or provide some needed structure, this is not intended to be a particularly formal work and should not be treated as such.
 
@@ -26,7 +31,7 @@ While I attempted to be rigorous at some points where I felt it may aid understa
 While I imagine a majority of the people interested in this post will have an intuitive understanding of the Turing machine, I will just recount it here so we are all on the same page.
 A Turing machine consists of a read-write head that can move left and right along an infinitely long tape.
 
-It takes some input which it operates on, which is simply a sequence of letters. 
+It takes some input which it operates on, which is simply a sequence of characters. 
 For example, it could be a binary string representing a program.
 This input is put on the tape before the Turing machine starts its operation, while the rest of the tape is filled with blank characters.
 
