@@ -58,14 +58,11 @@ I hope this (intuition focused) explanation suffices for the rest of the blog.
 
 For example, the below FSM recognises the input of any number of $a$'s, followed by 2 $b$'s.
 
-
 {{< figure-dynamic
   dark-src="./images/fsm_dark.svg"
   light-src="./images/fsm.svg"
-  alt="A Turing machine"
+  alt="FSM"
 >}}
-
-
 
 The machine reads in $a$'s, until it reads either a $b$ or something else.
 If it reads a $b$ then it goes to state 2, otherwise, it goes to state 4, our rejecting state. 
