@@ -17,7 +17,7 @@ This shattered a lot of the initial perceptions of computation garnered in the 1
 
 ### Should you read this?
 If you are already familiar with a formal approach to Turing machines and you are wondering if there is anything to gain from this post, I believe there might be something in [this discussion about the connection between a proof of non-decidability and Cantor's theorem](#a-discussion-of-the-proof).
-To parse it, it may be helpful to read [this proof](#a-second,-more-exciting-result).
+To parse it, it may be helpful to read [this proof](#a-second-more-exciting-result).
 
 This post finishes by proving the Turing-recognisability but lack of decidability of $\text{ACCEPTS}_\text{TM}$ (with a discussion on diagonalisation proofs following) after building up the necessary machinery and intuition.
 
