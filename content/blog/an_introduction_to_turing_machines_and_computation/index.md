@@ -10,7 +10,7 @@ draft = false
 
 ## Introduction
 This blog aims to provide a short (but slightly longer than intended), and potentially useful, introduction to Turing machines.
-Turing machines are so fundamental to Computer Science and the study of computability (i.e. can this thing be computed? In finite time?) that an understanding of the key elements and results can only further one's appreciation for the field.
+Turing machines are so fundamental to Computer Science and the study of computability (i.e. can this thing be computed? In finite time?), that an understanding of the key elements and results can only further one's appreciation for the field.
 
 The study of Turing machines also leads to a proof of the halting problem, the fact that it is impossible to determine whether a program will halt or not given some input to that program.
 This shattered a lot of the initial perceptions of computation garnered in the 1930s by proving that computation, while it may be powerful, is fundamentally limited.
