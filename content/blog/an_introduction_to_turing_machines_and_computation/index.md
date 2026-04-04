@@ -16,13 +16,13 @@ The study of Turing machines also leads to a proof of the halting problem, the f
 This shattered a lot of the initial perceptions of computation garnered in the 1930s by proving that computation, while it may be powerful, is fundamentally limited.
 
 ### Should you read this?
+If you are already familiar with a formal approach to Turing machines and you are wondering if there is anything to gain from this post, I believe there might be something in [this discussion about the connection between a proof of non-decidability and Cantor's theorem](#a-discussion-of-the-proof).
+To parse it, it may be helpful to read [this proof](#a-second,-more-exciting-result).
+
 This post finishes by proving the Turing-recognisability but lack of decidability of $\text{ACCEPTS}_\text{TM}$ (with a discussion on diagonalisation proofs following) after building up the necessary machinery and intuition.
 
 If this seems like gibberish, then don't worry, I have tried to assume a low baseline of knowledge (which is built upon), and all non-trivial statements and definitions are accompanied by explanations and/or examples where possible.
 Furthermore, any questions are welcome either by comment or by email (see the bottom of the page).
-
-Alternatively, if you are already familiar with a formal approach to Turing machines and you are wondering if there is anything to gain from this post, I believe there might be in [this discussion about the connection between a proof of non-decidability and Cantor's theorem](#a-discussion-of-the-proof).
-To parse it it may be helpful to read [this proof](#a-second,-more-exciting-result).
 
 While I attempted to be rigorous at some points where I felt it may aid understanding or provide some needed structure, this is not intended to be a particularly formal work and should not be treated as such.
 
