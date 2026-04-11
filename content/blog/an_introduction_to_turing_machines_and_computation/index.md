@@ -277,7 +277,7 @@ I think the main achievement of this post is the [discussion about the second re
 These links are everywhere in mathematics and, I feel, they truly form the backbone of the beauty in mathematics.
 I hope that I was able to make some of this beauty clear today.
 
-Finally, I would like to thank my *Logic and Automata* professor and seminar tutors at the University of Warwick for their excellent teaching and support in this area.
+Finally, I would like to thank my *Logic and Automata* professor, Marcin Jurdzinski, and seminar tutors at the University of Warwick for their excellent teaching and support in this area.
 
 Please leave questions or comments below or email me at max_a (at) e.email if you would like to discuss anything!
 
