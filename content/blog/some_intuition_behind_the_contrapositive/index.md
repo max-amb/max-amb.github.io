@@ -1,5 +1,5 @@
 +++
-title = 'Some intuition behind the contraposative'
+title = 'Some intuition behind the contrapositive'
 date = '2026-06-27'
 draft = false
 +++
@@ -9,9 +9,9 @@ draft = false
 {{< /details >}}
 
 # Introduction
-While quite a fundamental law in logic, the contraposative is certainly not immediately intuitive (or at least it was not to me).
+While quite a fundamental law in logic, the contrapositive is certainly not immediately intuitive (or at least it was not to me).
 After someone else expressed a similar feeling, I decided to try and derive some intuition to explain the rule, and I think I have succeeded.
-This blog could also be treated as an introduction to the contraposative.
+This blog could also be treated as an introduction to the contrapositive.
 
 Just so everyone is on the same page, here is the rule in all its formal glory:
 $$
@@ -80,7 +80,7 @@ I provide a graphic (in two ways!!!) representation of this fact below:
     alt="An outline drawing of a fish with crosses for eyes to indicate, it is dead"
 >}}
 
-While cruel, our actions have now illuminated the right hand side of the contraposative rule.
+While cruel, our actions have now illuminated the right hand side of the contrapositive rule.
 If we have no lakes, then our fish is not healthy, or
 $$
 \lnot L \to \lnot F
@@ -94,7 +94,7 @@ Drawn in all of its horrifying detail:
     alt="An outline drawing of a lake with a big red cross overlaying it, followed by a right pointing arrow (representing implication), followed by an outline drawing of a dead fish"
 >}}
 
-Though our methods were unconventional, we have now managed to demonstrate an example of the contraposative!
+Though our methods were unconventional, we have now managed to demonstrate an example of the contrapositive!
 If we have a healthy fish, then we have lakes.
 If we have no lakes, then the fish are not healthy.
 $$
