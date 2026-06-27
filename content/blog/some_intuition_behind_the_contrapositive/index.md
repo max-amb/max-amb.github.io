@@ -1,7 +1,7 @@
 +++
 title = 'Some intuition behind the contraposative'
 date = '2026-06-27'
-draft = true
+draft = false
 +++
 
 {{< details title="Contents" >}}
