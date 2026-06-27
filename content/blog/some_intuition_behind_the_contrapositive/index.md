@@ -8,7 +8,7 @@ draft = false
 {{< toc >}}
 {{< /details >}}
 
-# Introduction
+## Introduction
 While quite a fundamental law in logic, the contrapositive is certainly not immediately intuitive (or at least it was not to me).
 After someone else expressed a similar feeling, I decided to try and derive some intuition to explain the rule, and I think I have succeeded.
 This blog could also be treated as an introduction to the contrapositive.
@@ -20,7 +20,7 @@ $$
 where $P, Q$ are logical propositions and $\lnot$ represents the following proposition being false.
 Stated colloquially, if having one thing ($P$) gives us that we have another thing ($Q$), then if we do not have this other thing ($\lnot Q$), then we cannot have our original thing ($\lnot P$).
 
-# The explanation
+## The explanation
 Consider a fish, an alive and healthy fish. To spark your imagination, I have used all of my artistic talent to provide a diagram:
 
 {{<
@@ -101,7 +101,7 @@ $$
 F \to L \leftrightarrow  \lnot L \to \lnot F
 $$
 
-# Conclusion
+## Conclusion
 I hope this example was somewhat illuminating and entertaining. As always, any questions/comments are welcome below or by email: max_a (at) e.email!
 
 [^1]: Every animal needs water to survive (see this comprehensive source: https://www.bbc.co.uk/bitesize/articles/z343f82), but it's easier to draw how fish depend on water.
