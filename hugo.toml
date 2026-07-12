@@ -29,7 +29,7 @@ theme = "hugo-bearblog"
           inline = [['$', '$']]
 
 [params]
-  favicon = "favicon.svg"
+  favicon = false
   enablePostNavigator = true
   math = true
   DefaultContentLanguage = "en"
