@@ -62,6 +62,7 @@ Therefore, Tolstoyan art very much mirrors the structure of a zero knowledge pro
 I readily admit that this argument is not very structurally sound. However, I thought it was an interesting comparison, so yeah :D.
 
 As always, comments are welcome below or via email: max_a (at) e.email.
+Furthermore, this post has gained some traction on [hacker news](https://news.ycombinator.com/item?id=48872965) so discussions may be easier to have there!
 
 [^1]:  https://en.wikipedia.org/wiki/What_Is_Art%3F
 [^2]: https://link.springer.com/chapter/10.1007/3-540-32939-0_1
