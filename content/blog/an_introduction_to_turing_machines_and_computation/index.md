@@ -279,7 +279,7 @@ I hope that I was able to make some of this beauty clear today.
 
 Finally, I would like to thank my *Logic and Automata* professor, Marcin Jurdzinski, and seminar tutors at the University of Warwick for their excellent teaching and support in this area.
 
-Please leave questions or comments below or email me at max_a (at) e.email if you would like to discuss anything!
+Please leave questions or comments below or email me at max (at) max-amb.com if you would like to discuss anything!
 
 
 [^1]: Hopcroft, John; Ullman, Jeffrey D. (1979). Introduction to Automata Theory, Languages, and Computation (1st ed.). Reading, Mass.: Addison–Wesley. ISBN 0-201-02988-X. "Centered around the issues of machine-interpretation of "languages", NP-completeness, etc.". Page 148.

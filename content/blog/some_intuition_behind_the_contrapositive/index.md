@@ -102,7 +102,7 @@ F \to L \leftrightarrow  \lnot L \to \lnot F
 $$
 
 ## Conclusion
-I hope this example was somewhat illuminating and entertaining. As always, any questions/comments are welcome below or by email: max_a (at) e.email!
+I hope this example was somewhat illuminating and entertaining. As always, any questions/comments are welcome below or by email: max (at) max-amb.com!
 
 [^1]: Every animal needs water to survive (see this comprehensive source: [https://www.bbc.co.uk/bitesize/articles/z343f82](https://www.bbc.co.uk/bitesize/articles/z343f82)), but it's easier to draw how fish depend on water.
 [^2]: https://knowyourmeme.com/memes/your-scientists-were-so-preoccupied-with-whether-or-not-they-could-they-didnt-stop-to-think-if-they-should
