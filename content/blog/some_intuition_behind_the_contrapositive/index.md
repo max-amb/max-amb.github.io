@@ -1,6 +1,7 @@
 +++
 title = 'Some intuition behind the contrapositive'
 date = '2026-06-27'
+lastmod = '2026-09-23'
 draft = false
 +++
 
@@ -10,15 +11,19 @@ draft = false
 
 ## Introduction
 While quite a fundamental law in logic, the contrapositive is certainly not immediately intuitive (or at least it was not to me).
-After someone else expressed a similar feeling, I decided to try and derive some intuition to explain the rule, and I think I have succeeded.
+After someone else expressed a similar feeling, I decided to try and derive some intuition to explain the rule, the results of which can be found here!
 This blog could also be treated as an introduction to the contrapositive.
 
-Just so everyone is on the same page, here is the rule in all its formal glory:
+Before we begin, I would like to show how the formal definition of the contrapositive looks.
+I like to think that definitions codify intuition, but it only goes one way.
+That is, we can turn intuition into definitions, but trying to gain intuition from a definition is a faux pas.
+Towards the end of this post we will revisit it, and hopefully, you will see your newfound intuition reflected in the definition.
+
+The contrapositive is defined as the equivalence 
 $$
 P \to Q \leftrightarrow (\lnot Q) \to (\lnot P)
 $$
 where $P, Q$ are logical propositions and $\lnot$ represents the following proposition being false.
-Stated colloquially, if having one thing ($P$) gives us that we have another thing ($Q$), then if we do not have this other thing ($\lnot Q$), then we cannot have our original thing ($\lnot P$).
 
 ## The explanation
 Consider a fish, an alive and healthy fish. To spark your imagination, I have used all of my artistic talent to provide a diagram:
@@ -41,9 +46,11 @@ I have worked hard to produce another diagram to show this relation:
     alt="An outline drawing of a fish in a lake"
 >}}
 
-Therefore, if we have a healthy fish, then we have a lake, or in notation:
-$F \to L$
-where $F$ represents having a fish, and $L$ represents having a lake.
+Therefore, if we have a healthy fish, then we have a lake, or codified:
+$$
+F \to L
+$$
+where $F$ represents having a fish, $L$ represents having a lake, and $\to$ represents the idea that having $F$ gives you $L$.
 Take a moment to really make sure this makes sense to you, both the notational and picture form:
 
 {{<
@@ -81,10 +88,11 @@ I provide a graphic (in two ways!!!) representation of this fact below:
 >}}
 
 While cruel, our actions have now illuminated the right hand side of the contrapositive rule.
-If we have no lakes, then our fish is not healthy, or
+If we have no lakes, then our fish is not healthy, or codified
 $$
-\lnot L \to \lnot F
+(\lnot L) \to (\lnot F)
 $$
+Here $\lnot$ is used to represent the idea of there not being something, so $\lnot L$ means we don't have lakes, and brackets are there just to make it clear what the $\lnot$ applies to.
 Drawn in all of its horrifying detail:
 
 {{<
@@ -98,10 +106,18 @@ Though our methods were unconventional, we have now managed to demonstrate an ex
 If we have a healthy fish, then we have lakes.
 If we have no lakes, then the fish are not healthy.
 $$
-F \to L \leftrightarrow  \lnot L \to \lnot F
+F \to L \leftrightarrow (\lnot L) \to (\lnot F)
 $$
+Here $\leftrightarrow$ means that $F \to L$ being true gives us that $(\lnot L) \to (\lnot F)$ is true, and $(\lnot L) \to (\lnot F)$ being true gives us that $F \to L$ is also true.
 
 ## Conclusion
+This may remind you of the definition we explored at the beginning of the post
+$$
+P \to Q \leftrightarrow (\lnot Q) \to (\lnot P)
+$$
+They look pretty similar no?
+We have merely codified what our intuition said :).
+
 I hope this example was somewhat illuminating and entertaining. As always, any questions/comments are welcome below or by email: max (at) max-amb.com!
 
 [^1]: Every animal needs water to survive (see this comprehensive source: [https://www.bbc.co.uk/bitesize/articles/z343f82](https://www.bbc.co.uk/bitesize/articles/z343f82)), but it's easier to draw how fish depend on water.
