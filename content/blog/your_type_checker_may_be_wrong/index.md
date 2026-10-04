@@ -13,6 +13,10 @@ Therefore, one may be surprised by the fact that type checkers also form the bac
 
 In this blog I would like to first introduce some of the more basic elements of the Curry-Howard correspondence, followed by how it is used in proof assistants and eventually, why this may mean your type checker is *wrong* (or just, may not know you are right).
 
+## A note on accuracy
+This blog is focused on being interesting and accessible over strict formality, and makes heavy use of ✨ intuition ✨.
+I make several simplifications and analogies for the purpose of presenting ideas in a digestible form; however, this does mean I have sacrificed some rigour.
+
 ## The Curry-Howard correspondence
 A light definition of the Curry-Howard (CH) correspondence could be:
 >proofs can be represented as programs, (...), proofs can be run[^2]
