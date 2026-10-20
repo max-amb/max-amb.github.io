@@ -10,4 +10,4 @@ Also, I play trumpet and violin, and I enjoy classical music (perhaps by extensi
 
 Last summer I took part in [PAIR 2025](https://pair.camp) and recieved a commendation in the John Locke essay prize for an essay focused on evil and terrorism. This summer I took part in the summer of nix 2026 fellowship as well as interning at Antithesis and Foundry Zero (for 3 weeks and 8 weeks respectively).
 
-I love meeting new people and talking about interesting things, so if you would like to chat, feel free to email me at [max@max-amb.com](mailto:max@max-amb.com) or [connect with me on linkedin](www.linkedin.com/in/max-ambaum-592884439).
+I love meeting new people and talking about interesting things, so if you would like to chat, feel free to email me at [max@max-amb.com](mailto:max@max-amb.com) or [connect with me on linkedin](https://www.linkedin.com/in/max-ambaum-592884439).
